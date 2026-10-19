@@ -1,0 +1,124 @@
+.schedules-window {
+  background-color: rgba($paper, 0.96);
+  border: 2px solid $ink;
+  border-radius: $round;
+  padding: 8px 12px;
+  min-width: 480px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: opacity 240ms ease, background-color 240ms ease;
+}
+
+.schedule-container {
+  min-width: 460px;
+}
+
+.schedule-header {
+  border-bottom: 2px solid $ink;
+  padding: 4px 0 6px 0;
+  margin-bottom: 4px;
+}
+
+.schedule-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: $strong;
+  letter-spacing: 1px;
+}
+
+.schedule-meta {
+  font-size: 11px;
+  color: $ink_muted;
+  letter-spacing: 0.5px;
+}
+
+.schedule-thead {
+  border-bottom: 1px solid $ink;
+  padding: 3px 0;
+  margin-bottom: 2px;
+}
+
+.schedule-th-label {
+  font-size: 10px;
+  font-weight: bold;
+  color: $ink_muted;
+  letter-spacing: 0.8px;
+}
+
+.schedule-tr, .schedule-tr-process {
+  border-bottom: 1px solid rgba(62, 52, 42, 0.25);
+  padding: 4px 0;
+  transition: background-color 150ms ease;
+}
+
+.schedule-tr:hover, .schedule-tr-process:hover {
+  background-color: rgba(62, 52, 42, 0.05);
+}
+
+.schedule-tr:last-child, .schedule-tr-process:last-child {
+  border-bottom: none;
+}
+
+.schedule-td {
+  padding: 1px 4px;
+}
+
+.schedule-td-text {
+  font-size: 11px;
+  color: $ink;
+}
+
+.schedule-note {
+  padding: 0 4px 2px 24px;
+}
+
+.schedule-note-text {
+  font-size: 10px;
+  color: $ink_muted;
+  font-style: italic;
+}
+
+.td-no {
+  min-width: 28px;
+}
+
+.td-proc {
+  min-width: 140px;
+}
+
+.td-pid {
+  min-width: 55px;
+}
+
+.td-cpu {
+  min-width: 75px;
+}
+
+.td-mem {
+  min-width: 60px;
+}
+
+.td-time {
+  min-width: 65px;
+}
+
+.schedule-bar {
+  min-height: 3px;
+  padding: 0;
+  margin: 1px 0 0 0;
+
+  trough {
+    min-height: 3px;
+    background-color: rgba(62, 52, 42, 0.15);
+    border-radius: 0px;
+
+    highlight {
+      min-height: 3px;
+      background-color: $ink;
+      border-radius: 0px;
+    }
+  }
+
+  &.alert trough highlight {
+    background-color: $alert;
+  }
+}

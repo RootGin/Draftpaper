@@ -1,9 +1,12 @@
+(defvar schedule_mode "none")
 (defpoll readings :interval "2s" "scripts/readings.py")
 (deflisten workspaces :initial "[]" "python3 scripts/workspaces.py")
 (defpoll alerts :interval "3s" :initial "{\"urgent\": false, \"hot\": false, \"battery_low\": false, \"text\": \"\"}" "python3 scripts/alerts.py")
 (deflisten parked_slots :initial "{\"left\": [], \"right\": []}" "python3 scripts/parked.py")
+(defpoll schedule_data :interval "3s" "python3 scripts/schedules.py data")
 
 (include "./yuck/background.yuck")
 (include "./yuck/title-block.yuck")
 (include "./yuck/top-margin.yuck")
 (include "./yuck/side-margins.yuck")
+(include "./yuck/schedules.yuck")
