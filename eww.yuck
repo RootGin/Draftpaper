@@ -19,4 +19,4 @@
 (include "./yuck/notifications-osd.yuck")
 (include "./yuck/bottom-margin.yuck")
 (include "./yuck/schedules.yuck")
-
+(include "./yuck/load-graphs.yuck")

@@ -1,0 +1,69 @@
+(defvar graph_mode "none")
+(defpoll graph_data :interval "2s" :initial "{\"mode\": \"none\", \"active_metric\": \"none\", \"power\": {\"current\": 0, \"min\": 0, \"max\": 100, \"avg\": 0, \"values\": [0], \"points\": \"0,30 240,30\", \"unit\": \"W\", \"label\": \"POWER DRAW\", \"svg_path\": \"\"}, \"battery\": {\"current\": 100, \"min\": 0, \"max\": 100, \"avg\": 100, \"values\": [100], \"points\": \"0,30 240,30\", \"unit\": \"%\", \"label\": \"BATTERY CAPACITY\", \"svg_path\": \"\"}, \"cpu\": {\"current\": 0, \"min\": 0, \"max\": 100, \"avg\": 0, \"values\": [0], \"points\": \"0,30 240,30\", \"unit\": \"%\", \"label\": \"CPU LOAD\", \"svg_path\": \"\"}, \"ram\": {\"current\": 0, \"min\": 0, \"max\": 100, \"avg\": 0, \"values\": [0], \"points\": \"0,30 240,30\", \"unit\": \"%\", \"label\": \"MEMORY LOAD\", \"svg_path\": \"\"}, \"network\": {\"current\": 0, \"min\": 0, \"max\": 100, \"avg\": 0, \"values\": [0], \"points\": \"0,30 240,30\", \"unit\": \"KB/s\", \"label\": \"NETWORK THROUGHPUT\", \"svg_path\": \"\"}, \"temperature\": {\"current\": 40, \"min\": 30, \"max\": 100, \"avg\": 40, \"values\": [40], \"points\": \"0,30 240,30\", \"unit\": \"°C\", \"label\": \"TEMPERATURE\", \"svg_path\": \"\"}, \"temp\": {\"current\": 40, \"min\": 30, \"max\": 100, \"avg\": 40, \"values\": [40], \"points\": \"0,30 240,30\", \"unit\": \"°C\", \"label\": \"TEMPERATURE\", \"svg_path\": \"\"}, \"active\": {\"current\": 0, \"min\": 0, \"max\": 100, \"avg\": 0, \"values\": [0], \"points\": \"0,30 240,30\", \"unit\": \"%\", \"label\": \"CPU LOAD\", \"svg_path\": \"\"}, \"active_value\": 0, \"svg_path\": \"\"}" "python3 scripts/graphs.py data")
+
+(defwidget load_graphs_widget []
+  (revealer :reveal {graph_mode != "none"}
+            :transition "crossfade"
+            :duration "240ms"
+    (box :class "load-graphs-window"
+         :orientation "v"
+         :space-evenly false
+      (box :class "load-graphs-container"
+           :orientation "v"
+           :space-evenly false
+        (box :class "graph-header"
+             :orientation "h"
+             :space-evenly false
+          (label :class "graph-title"
+                 :halign "start"
+                 :text {graph_data.active.label})
+          (label :class "graph-meta"
+                 :halign "end"
+                 :hexpand true
+                 :text "NOW ${graph_data.active.current}${graph_data.active.unit} · MIN ${graph_data.active.min} · MAX ${graph_data.active.max} · AVG ${graph_data.active.avg}"))
+        (box :class "graph-body"
+             :orientation "h"
+             :space-evenly false
+          (box :class "graph-y-axis"
+               :orientation "v"
+               :space-evenly true
+            (label :class "axis-label" :halign "end" :text "${graph_data.active.max}")
+            (label :class "axis-label" :halign "end" :text "${graph_data.active.avg}")
+            (label :class "axis-label" :halign "end" :text "${graph_data.active.min}"))
+          (overlay :class "graph-plot-area"
+                   :hexpand true
+            (box :class "graph-grid-rules"
+                 :orientation "v"
+                 :space-evenly true
+              (box :class "rule-line rule-top")
+              (box :class "rule-line rule-mid")
+              (box :class "rule-line rule-bottom"))
+            (image :class "sparkline-trace-svg"
+                   :path {graph_data.active.svg_path})
+            (graph :class "sparkline-trace"
+                   :value {graph_data.active_value}
+                   :thickness 1.5
+                   :time-range "60s"
+                   :dynamic false
+                   :min 0
+                   :max 100)))
+        (box :class "graph-footer"
+             :orientation "h"
+             :space-evenly false
+          (label :class "axis-time-label" :halign "start" :text "5M AGO")
+          (label :class "axis-time-label" :halign "center" :hexpand true :text "2.5M")
+          (label :class "axis-time-label" :halign "end" :text "NOW")
+          (eventbox :onclick "python3 scripts/graphs.py toggle none"
+            (label :class "graph-close-btn" :text "✕ CLOSE")))))))
+
+(defwindow load-graphs
+  :monitor 0
+  :geometry (geometry :x "16px"
+                      :y "48px"
+                      :width "520px"
+                      :height "160px"
+                      :anchor "bottom left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  (load_graphs_widget))
