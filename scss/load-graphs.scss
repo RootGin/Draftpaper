@@ -1,0 +1,105 @@
+.load-graphs-window {
+  background-color: rgba($paper, 0.96);
+  border: 2px solid $ink;
+  border-radius: $round;
+  padding: 8px 12px;
+  min-width: 480px;
+  min-height: 140px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: opacity 240ms ease, background-color 240ms ease;
+}
+
+.load-graphs-container {
+  min-width: 460px;
+}
+
+.graph-header {
+  border-bottom: 2px solid $ink;
+  padding: 4px 0 6px 0;
+  margin-bottom: 6px;
+}
+
+.graph-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: $strong;
+  letter-spacing: 1px;
+}
+
+.graph-meta {
+  font-size: 11px;
+  color: $ink_muted;
+  letter-spacing: 0.5px;
+}
+
+.graph-body {
+  padding: 4px 0;
+  min-height: 70px;
+}
+
+.graph-y-axis {
+  min-width: 45px;
+  padding-right: 6px;
+}
+
+.axis-label {
+  font-size: 10px;
+  color: $ink_muted;
+  letter-spacing: 0.5px;
+}
+
+.graph-plot-area {
+  min-height: 65px;
+  min-width: 380px;
+  border-left: 1px solid $ink;
+  border-bottom: 1px solid $ink;
+  background-color: rgba($paper_light, 0.5);
+}
+
+.graph-grid-rules {
+  min-height: 65px;
+}
+
+.rule-line {
+  min-height: 1px;
+  border-bottom: 1px dashed rgba(62, 52, 42, 0.18);
+}
+
+.rule-bottom {
+  border-bottom: none;
+}
+
+.sparkline-trace-svg {
+  min-height: 60px;
+  min-width: 360px;
+}
+
+.sparkline-trace {
+  color: $accent;
+  min-height: 60px;
+  min-width: 360px;
+}
+
+.graph-footer {
+  border-top: 1px solid rgba(62, 52, 42, 0.25);
+  padding-top: 4px;
+  margin-top: 4px;
+}
+
+.axis-time-label {
+  font-size: 10px;
+  color: $ink_muted;
+  letter-spacing: 0.8px;
+}
+
+.graph-close-btn {
+  font-size: 10px;
+  font-weight: bold;
+  color: $alert;
+  padding: 0 4px;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: $strong;
+  }
+}

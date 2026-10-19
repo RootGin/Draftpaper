@@ -10,7 +10,7 @@
            :space-evenly false
         (label :class "tb-label" :halign "start" :text "TIME")
         (label :class "tb-value tb-time-val" :halign "start" :text "${readings.time}"))
-      (eventbox :onclick "draftpaper graph network 2>/dev/null || true"
+      (eventbox :onclick "draftpaper graph network 2>/dev/null || python3 scripts/graphs.py toggle network"
         (box :class "tb-cell tb-network"
              :orientation "v"
              :space-evenly false
@@ -41,13 +41,13 @@
       (box :class "tb-row"
            :orientation "h"
            :space-evenly false
-        (eventbox :onclick "draftpaper graph power 2>/dev/null || true"
+        (eventbox :onclick "draftpaper graph power 2>/dev/null || python3 scripts/graphs.py toggle power"
           (box :class "tb-cell tb-power"
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "POWER")
             (label :class "tb-value" :halign "start" :text "${readings.power}")))
-        (eventbox :onclick "draftpaper graph battery 2>/dev/null || true"
+        (eventbox :onclick "draftpaper graph battery 2>/dev/null || python3 scripts/graphs.py toggle battery"
           (box :class {readings.battery_alert ? "tb-cell tb-battery alert" : "tb-cell tb-battery"}
                :orientation "v"
                :space-evenly false
@@ -59,7 +59,7 @@
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "PROFILE")
             (label :class "tb-value" :halign "start" :text "${readings.profile_text}")))
-        (eventbox :onclick "draftpaper graph load 2>/dev/null || true"
+        (eventbox :onclick "draftpaper graph load 2>/dev/null || python3 scripts/graphs.py toggle cpu"
           (box :class "tb-cell tb-cpumem"
                :orientation "v"
                :space-evenly false
@@ -68,7 +68,7 @@
       (box :class "tb-row"
            :orientation "h"
            :space-evenly false
-        (eventbox :onclick "draftpaper graph temp 2>/dev/null || true"
+        (eventbox :onclick "draftpaper graph temp 2>/dev/null || python3 scripts/graphs.py toggle temp"
           (box :class {readings.temp_alert ? "tb-cell tb-temp alert" : "tb-cell tb-temp"}
                :orientation "v"
                :space-evenly false
