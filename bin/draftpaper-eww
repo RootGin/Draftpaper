@@ -1,0 +1,266 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+DEFAULT_CONFIG_DIR = Path(__file__).resolve().parent.parent
+
+
+def get_config_dir(args=None):
+    if args and getattr(args, "config", None):
+        return Path(args.config).resolve()
+    env_dir = os.environ.get("DRAFTPAPER_CONFIG_DIR") or os.environ.get("EWW_DIR")
+    if env_dir:
+        return Path(env_dir).resolve()
+    return DEFAULT_CONFIG_DIR
+
+
+def run_eww(config_dir, eww_args, capture=True):
+    cmd = ["eww", "-c", str(config_dir)] + list(eww_args)
+    try:
+        res = subprocess.run(cmd, capture_output=capture, text=True)
+        return res
+    except Exception as e:
+        if not capture:
+            sys.stderr.write(f"{e}\n")
+        return subprocess.CompletedProcess(cmd, 1, stdout="", stderr=str(e))
+
+
+def cmd_schedule(args, config_dir):
+    script = config_dir / "scripts" / "schedules.py"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    action = args.action or "toggle"
+    if action in ["equipment", "processes", "revisions", "none"]:
+        cmd = [sys.executable, str(script), "toggle", action]
+    elif action == "next":
+        cmd = [sys.executable, str(script), "toggle"]
+    elif action == "data":
+        cmd = [sys.executable, str(script), "data"]
+    elif action == "toggle":
+        target = args.target if hasattr(args, "target") and args.target else None
+        cmd = [sys.executable, str(script), "toggle"] + ([target] if target else [])
+    else:
+        cmd = [sys.executable, str(script), action] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
+
+
+def cmd_launcher(args, config_dir):
+    script = config_dir / "scripts" / "launcher.py"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    action = args.action or "toggle"
+    cmd = [sys.executable, str(script), action] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
+
+
+def cmd_theme(args, config_dir):
+    script = config_dir / "scripts" / "theme.sh"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    action = args.action or "current"
+    if action == "list":
+        themes = ["nord", "softglow", "blueprint", "daypanel", "nightpanel"]
+        print("\n".join(themes))
+        return 0
+    cmd = ["bash", str(script), action] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
+
+
+def cmd_osd(args, config_dir):
+    script = config_dir / "scripts" / "osd.sh"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    action = args.action or "status"
+    cmd = ["bash", str(script), action] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
+
+
+def cmd_readings(args, config_dir):
+    script = config_dir / "scripts" / "readings.py"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    res = subprocess.run([sys.executable, str(script)], capture_output=True, text=True, env=env)
+    if res.returncode != 0:
+        sys.stderr.write(res.stderr)
+        return res.returncode
+    try:
+        data = json.loads(res.stdout)
+    except Exception:
+        sys.stdout.write(res.stdout)
+        return 0
+    if args.field:
+        field_val = data.get(args.field)
+        if field_val is not None:
+            if isinstance(field_val, (dict, list)):
+                print(json.dumps(field_val))
+            else:
+                print(field_val)
+        else:
+            print(f"Unknown field: {args.field}", file=sys.stderr)
+            return 1
+    else:
+        print(res.stdout.strip())
+    return 0
+
+
+def cmd_graph(args, config_dir):
+    script = config_dir / "scripts" / "graphs.py"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    action = args.action or "data"
+    cmd = [sys.executable, str(script), action] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
+
+
+def cmd_park(args, config_dir):
+    script = config_dir / "scripts" / "parked.py"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    action = getattr(args, "action", None)
+    if getattr(args, "oneshot", False) or action in ["list", "status", "--oneshot", None]:
+        cmd = [sys.executable, str(script), "--oneshot"]
+    else:
+        cmd = [sys.executable, str(script), action] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
+
+
+def cmd_screenshot(args, config_dir):
+    script = config_dir / "scripts" / "screenshot.sh"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    cmd = ["bash", str(script)] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
+
+
+def cmd_daemon(args, config_dir):
+    action = args.action or "status"
+    if action == "start":
+        res = run_eww(config_dir, ["daemon"], capture=False)
+        return res.returncode
+    elif action == "stop" or action == "kill":
+        res = run_eww(config_dir, ["kill"], capture=False)
+        return res.returncode
+    elif action == "ping":
+        res = run_eww(config_dir, ["ping"])
+        if res.stdout:
+            sys.stdout.write(res.stdout)
+        if res.stderr:
+            sys.stderr.write(res.stderr)
+        return res.returncode
+    elif action == "status":
+        res = run_eww(config_dir, ["ping"])
+        if res.returncode == 0 and "pong" in res.stdout:
+            print("running")
+            return 0
+        else:
+            print("stopped")
+            return 0
+    elif action == "restart":
+        run_eww(config_dir, ["kill"])
+        time.sleep(0.5)
+        res = run_eww(config_dir, ["daemon"], capture=False)
+        return res.returncode
+    elif action == "reload":
+        res = run_eww(config_dir, ["reload"], capture=False)
+        return res.returncode
+    elif action == "open":
+        windows = args.extra if args.extra else ["canvas-window", "title-block-window", "margin-window"]
+        res = run_eww(config_dir, ["open-many"] + windows, capture=False)
+        return res.returncode
+    elif action == "close":
+        windows = args.extra if args.extra else ["canvas-window", "title-block-window", "margin-window"]
+        res = run_eww(config_dir, ["close"] + windows, capture=False)
+        return res.returncode
+    else:
+        res = run_eww(config_dir, [action] + (args.extra or []), capture=False)
+        return res.returncode
+
+
+def build_parser():
+    parser = argparse.ArgumentParser(
+        prog="draftpaper-eww",
+        description="Unified Draftpaper Eww Control Suite",
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        dest="config",
+        help="Path to eww configuration directory",
+        default=None,
+    )
+    subparsers = parser.add_subparsers(dest="subcommand", help="Subcommands")
+
+    sub_sched = subparsers.add_parser("schedule", help="Control schedule overlays")
+    sub_sched.add_argument("action", nargs="?", default="toggle", help="Action: toggle, next, data, equipment, processes, revisions, none")
+    sub_sched.add_argument("extra", nargs="*", help="Additional arguments")
+
+    sub_launcher = subparsers.add_parser("launcher", help="Application register launcher")
+    sub_launcher.add_argument("action", nargs="?", default="toggle", help="Action: toggle, open, close, list, launch, up, down, query, menu")
+    sub_launcher.add_argument("extra", nargs="*", help="Additional arguments")
+
+    sub_theme = subparsers.add_parser("theme", help="Manage themes")
+    sub_theme.add_argument("action", nargs="?", default="current", help="Action: current, next, set, list")
+    sub_theme.add_argument("extra", nargs="*", help="Additional arguments")
+
+    sub_osd = subparsers.add_parser("osd", help="On-screen display adjustments")
+    sub_osd.add_argument("action", nargs="?", default="status", help="Action: volume, brightness, status, get")
+    sub_osd.add_argument("extra", nargs="*", help="Additional arguments")
+
+    sub_readings = subparsers.add_parser("readings", help="System telemetry readings")
+    sub_readings.add_argument("field", nargs="?", default=None, help="Specific reading field to display")
+
+    sub_graph = subparsers.add_parser("graph", help="Telemetry sparkline graphs")
+    sub_graph.add_argument("action", nargs="?", default="data", help="Action: data, record, toggle")
+    sub_graph.add_argument("extra", nargs="*", help="Additional arguments")
+
+    sub_park = subparsers.add_parser("park", help="Parked windows management")
+    sub_park.add_argument("--oneshot", action="store_true", dest="oneshot", default=False, help="Print parked windows JSON once")
+    sub_park.add_argument("action", nargs="?", default="list", help="Action: list, park, unpark, --oneshot")
+    sub_park.add_argument("extra", nargs="*", help="Additional arguments")
+
+    sub_shot = subparsers.add_parser("screenshot", help="Capture screenshot")
+    sub_shot.add_argument("extra", nargs="*", help="Additional arguments")
+
+    sub_daemon = subparsers.add_parser("daemon", help="Manage eww daemon and windows")
+    sub_daemon.add_argument("action", nargs="?", default="status", help="Action: start, stop, restart, ping, status, reload, open, close")
+    sub_daemon.add_argument("extra", nargs="*", help="Additional arguments")
+
+    return parser
+
+
+def main():
+    parser = build_parser()
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(0)
+
+    args = parser.parse_args()
+    config_dir = get_config_dir(args)
+
+    dispatch = {
+        "schedule": cmd_schedule,
+        "launcher": cmd_launcher,
+        "theme": cmd_theme,
+        "osd": cmd_osd,
+        "readings": cmd_readings,
+        "graph": cmd_graph,
+        "park": cmd_park,
+        "screenshot": cmd_screenshot,
+        "daemon": cmd_daemon,
+    }
+
+    handler = dispatch.get(args.subcommand)
+    if handler:
+        ret = handler(args, config_dir)
+        sys.exit(ret if isinstance(ret, int) else 0)
+    else:
+        parser.print_help()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
