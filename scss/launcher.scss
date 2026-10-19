@@ -1,0 +1,127 @@
+.launcher-window {
+  background-color: rgba($paper, 0.96);
+  border: 2px solid $ink;
+  border-radius: $round;
+  padding: 8px 12px;
+  min-width: 540px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.launcher-query-zone {
+  border-bottom: 2px solid $ink;
+  padding: 4px 6px 6px 6px;
+  margin-bottom: 6px;
+}
+
+.launcher-query-prefix {
+  font-size: 13px;
+  font-weight: bold;
+  color: $strong;
+  letter-spacing: 1px;
+}
+
+.launcher-query-input {
+  font-size: 13px;
+  color: $ink;
+  background-color: transparent;
+  border: none;
+  padding: 0 4px;
+  min-width: 320px;
+}
+
+.launcher-query-cursor {
+  font-size: 13px;
+  font-weight: bold;
+  color: $accent;
+}
+
+.launcher-register {
+  min-width: 520px;
+}
+
+.launcher-header-cell {
+  border-bottom: 2px solid $ink;
+  padding: 3px 0 5px 0;
+  margin-bottom: 4px;
+}
+
+.launcher-header-text {
+  font-size: 11px;
+  font-weight: bold;
+  color: $strong;
+  letter-spacing: 0.8px;
+}
+
+.launcher-thead {
+  border-bottom: 1px solid $ink;
+  padding: 2px 0 4px 0;
+  margin-bottom: 2px;
+}
+
+.launcher-th {
+  font-size: 10px;
+  font-weight: bold;
+  color: $ink_muted;
+  letter-spacing: 0.8px;
+}
+
+.launcher-th-no, .launcher-td-no {
+  min-width: 32px;
+}
+
+.launcher-th-glyph, .launcher-td-glyph {
+  min-width: 36px;
+}
+
+.launcher-th-name, .launcher-td-name {
+  min-width: 180px;
+}
+
+.launcher-th-desc, .launcher-td-desc {
+  min-width: 260px;
+}
+
+.launcher-tbody {
+  padding: 2px 0;
+}
+
+.launcher-row {
+  border-bottom: 1px solid rgba(62, 52, 42, 0.25);
+  padding: 4px 2px;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: rgba($paper_light, 0.5);
+  }
+
+  &.selected {
+    background-color: $accent;
+    color: $paper;
+
+    .launcher-td {
+      color: $paper;
+      font-weight: bold;
+    }
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.launcher-row-cells {
+  padding: 1px 2px;
+}
+
+.launcher-td {
+  font-size: 11px;
+  color: $ink;
+}
+
+.launcher-td-name {
+  font-weight: bold;
+}
+
+.launcher-td-desc {
+  color: $ink_muted;
+}

@@ -1,0 +1,61 @@
+(defvar launcher_visible false)
+(defvar launcher_query "")
+(defvar launcher_index 0)
+(defpoll launcher_entries :interval "5s" :initial "{\"header\": \"REGISTER OF APPLICATIONS · 0 OF 0\", \"matches\": 0, \"total\": 0, \"prefix\": \"RUN ▸ \", \"query\": \"\", \"items\": []}" "python3 scripts/launcher.py list")
+
+(defwidget launcher_widget []
+  (box :class "launcher-window"
+       :orientation "v"
+       :space-evenly false
+    (box :class "launcher-query-zone"
+         :orientation "h"
+         :space-evenly false
+      (label :class "launcher-query-prefix"
+             :text "${launcher_entries.prefix}")
+      (input :class "launcher-query-input"
+             :value launcher_query
+             :onchange "python3 scripts/launcher.py query '{}'"
+             :onaccept "python3 scripts/launcher.py launch '${launcher_query}'")
+      (label :class "launcher-query-cursor"
+             :text "▏"))
+    (box :class "launcher-register"
+         :orientation "v"
+         :space-evenly false
+      (box :class "launcher-header-cell"
+           :orientation "h"
+           :space-evenly false
+        (label :class "launcher-header-text"
+               :halign "start"
+               :text "${launcher_entries.header}"))
+      (box :class "launcher-thead"
+           :orientation "h"
+           :space-evenly false
+        (label :class "launcher-th launcher-th-no" :text "NO.")
+        (label :class "launcher-th launcher-th-glyph" :text "GLYPH")
+        (label :class "launcher-th launcher-th-name" :text "NAME")
+        (label :class "launcher-th launcher-th-desc" :text "DESCRIPTION" :hexpand true :halign "start"))
+      (box :class "launcher-tbody"
+           :orientation "v"
+           :space-evenly false
+        (for item in {launcher_entries.items}
+          (eventbox :class "launcher-row ${item.i == launcher_index ? 'selected' : ''}"
+                    :onclick "python3 scripts/launcher.py launch '${item.id}'"
+                    :cursor "pointer"
+            (box :class "launcher-row-cells"
+                 :orientation "h"
+                 :space-evenly false
+              (label :class "launcher-td launcher-td-no" :text "${item.num}")
+              (label :class "launcher-td launcher-td-glyph" :text "${item.glyph}")
+              (label :class "launcher-td launcher-td-name" :text "${item.name}" :limit-width 24 :truncate true)
+              (label :class "launcher-td launcher-td-desc" :text "${item.desc}" :limit-width 36 :truncate true :hexpand true :halign "start"))))))))
+
+(defwindow launcher
+  :monitor 0
+  :geometry (geometry :x "32px"
+                      :y "32px"
+                      :anchor "top left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  :namespace "draftpaper-launcher"
+  (launcher_widget))
