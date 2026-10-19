@@ -1,0 +1,62 @@
+(defwidget top-notifications-widget []
+  (box :class "top-notifications-bar"
+       :orientation "h"
+       :space-evenly false
+       :halign "center"
+    (box :class "end-notifications-container"
+         :visible {end-notifications != ""}
+      (literal :content {end-notifications != "" ? end-notifications : "(box)"}))
+    (box :class "native-notifications-container"
+         :visible {end-notifications == "" && notifications.has_notification}
+      (eventbox :onclick "python3 scripts/notifications.py action ${notifications.id}"
+                :onrightclick "python3 scripts/notifications.py dismiss ${notifications.id}"
+                :cursor "pointer"
+                :class "notification-banner ${notifications.urgency}"
+        (box :class "notification-content"
+             :orientation "h"
+             :space-evenly false
+             :spacing 8
+          (label :class "notification-text"
+                 :limit-width 80
+                 :text "${notifications.text}")
+          (label :class "notification-count"
+                 :visible {notifications.waiting_count > 0}
+                 :text "+${notifications.waiting_count}"))))))
+
+(defwidget top-osd-widget []
+  (box :class "top-osd-bar"
+       :orientation "h"
+       :space-evenly false
+       :halign "end"
+    (box :class "osd-banner ${osd_data.type}"
+         :visible {osd_data.visible}
+         :orientation "h"
+         :space-evenly false
+         :spacing 8
+      (label :class "osd-icon"
+             :text "${osd_data.icon}")
+      (label :class "osd-text"
+             :text "${osd_data.text}")
+      (scale :class "osd-scale"
+             :min 0
+             :max 101
+             :value {osd_data.value}
+             :active false))))
+
+(defwindow top-notifications
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "50%" :height "28px" :anchor "top center")
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "draftpaper-notifications"
+  (top-notifications-widget))
+
+(defwindow top-osd
+  :monitor 0
+  :geometry (geometry :x "10px" :y "0%" :width "240px" :height "28px" :anchor "top right")
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "draftpaper-osd"
+  (top-osd-widget))

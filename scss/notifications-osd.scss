@@ -1,0 +1,83 @@
+.top-notifications-bar {
+  background-color: transparent;
+  padding: 0 $padding;
+  min-height: 28px;
+}
+
+.end-notifications-container {
+  padding: 2px 0;
+}
+
+.native-notifications-container {
+  padding: 2px 0;
+}
+
+.notification-banner {
+  background-color: $paper_light;
+  border: 1px solid rgba($ink, 0.2);
+  padding: 2px 10px;
+  margin: 2px 0;
+  transition: background-color $transition-base;
+
+  &.critical {
+    border-color: $alert;
+    .notification-text {
+      color: $alert;
+      font-weight: bold;
+    }
+  }
+
+  &:hover {
+    background-color: rgba($accent, 0.2);
+  }
+}
+
+.notification-text {
+  font-size: $font-size;
+  color: $ink;
+}
+
+.notification-count {
+  font-size: $font-size-sm;
+  color: rgba($ink, 0.6);
+  padding-left: 4px;
+  border-left: 1px solid rgba($ink, 0.2);
+}
+
+.top-osd-bar {
+  background-color: transparent;
+  padding: 0 $padding;
+  min-height: 28px;
+}
+
+.osd-banner {
+  background-color: $paper_light;
+  border: 1px solid rgba($ink, 0.25);
+  padding: 2px 8px;
+  margin: 2px 0;
+  transition: background-color $transition-base;
+}
+
+.osd-icon {
+  font-size: $font-size;
+  color: $strong;
+  padding-right: 4px;
+}
+
+.osd-text {
+  font-size: $font-size;
+  color: $ink;
+  padding-right: 6px;
+}
+
+.osd-scale {
+  trough {
+    min-width: 60px;
+    min-height: 4px;
+    background-color: rgba($ink, 0.2);
+
+    highlight {
+      background-color: $accent;
+    }
+  }
+}

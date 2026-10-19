@@ -2,8 +2,13 @@
 (deflisten workspaces :initial "[]" "python3 scripts/workspaces.py")
 (defpoll alerts :interval "3s" :initial "{\"urgent\": false, \"hot\": false, \"battery_low\": false, \"text\": \"\"}" "python3 scripts/alerts.py")
 (deflisten parked_slots :initial "{\"left\": [], \"right\": []}" "python3 scripts/parked.py")
+(deflisten notifications :initial "{\"has_notification\": false, \"text\": \"\", \"count\": 0, \"waiting_count\": 0, \"urgency\": \"normal\", \"id\": 0}" "python3 scripts/notifications.py")
+(defvar end-notifications "")
+(defvar osd_data "{\"type\": \"none\", \"value\": 0, \"text\": \"\", \"icon\": \"\", \"visible\": false}")
 
 (include "./yuck/background.yuck")
 (include "./yuck/title-block.yuck")
 (include "./yuck/top-margin.yuck")
 (include "./yuck/side-margins.yuck")
+(include "./yuck/notifications-osd.yuck")
+
