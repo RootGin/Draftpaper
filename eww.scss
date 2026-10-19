@@ -1,0 +1,35 @@
+$round: 0px;
+$padding: 4px;
+$margin: 4px;
+
+$font-family: "IBM Plex Mono", "DejaVu Sans Mono", monospace;
+$font-size: 14px;
+$font-size-sm: 12px;
+$font-size-lg: 18px;
+
+$transition-base: 300ms ease;
+
+@import "./theme";
+
+* {
+  all: unset;
+  color: $ink;
+  font-family: $font-family;
+  font-size: $font-size;
+}
+
+.window {
+  padding: $padding;
+  background-color: $paper;
+  border-radius: $round;
+  color: $ink;
+}
+
+.widget {
+  margin: $margin;
+  padding: $padding;
+  background-color: $paper_light;
+  border-radius: $round;
+  color: $ink;
+  transition: background-color $transition-base;
+}
