@@ -1,0 +1,53 @@
+$canvas-margin: 24px;
+
+.drafting-sheet {
+  background-color: $paper;
+  background-image:
+    radial-gradient(ellipse at 16% 20%, rgba($glow, 0.4) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba($glow, 0.25) 0%, transparent 40%),
+    radial-gradient(ellipse at 42% 88%, rgba($glow, 0.28) 0%, transparent 48%),
+    linear-gradient(135deg, $paper_light 0%, $paper 45%, $paper_shade 100%);
+  color: $ink;
+}
+
+.margin-top-bar,
+.margin-bottom-bar {
+  min-height: $canvas-margin;
+}
+
+.margin-corner {
+  min-width: $canvas-margin;
+  min-height: $canvas-margin;
+}
+
+.margin-ticks-v {
+  min-width: $canvas-margin;
+}
+
+.inner-frame {
+  border: 1px solid rgba($ink, 0.7);
+}
+
+.zone-tick-h {
+  border-right: 1px solid rgba($ink, 0.45);
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.zone-tick-v {
+  border-bottom: 1px solid rgba($ink, 0.45);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.canvas-interior {
+  background-color: transparent;
+}
+
+.wallpaper-layer {
+  background-color: rgba($paper, 0.35);
+}
