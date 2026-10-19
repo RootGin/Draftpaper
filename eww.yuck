@@ -1,1 +1,5 @@
+(defpoll readings :interval "2s" "scripts/readings.py")
+
 (include "./yuck/background.yuck")
+(include "./yuck/title-block.yuck")
+

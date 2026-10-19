@@ -1,0 +1,118 @@
+.title-block-window {
+  background-color: transparent;
+  border: 2px solid $ink;
+}
+
+.title-col-left {
+  border-right: 1px solid $ink_muted;
+}
+
+.title-col-right {
+  min-width: 384px;
+}
+
+.tb-row {
+  border-bottom: 1px solid $ink_muted;
+}
+
+.tb-row:last-child {
+  border-bottom: none;
+}
+
+.tb-cell {
+  padding: 4px 6px;
+  border-right: 1px solid $ink_muted;
+  transition: background-color 150ms ease;
+}
+
+.tb-row .tb-cell:last-child {
+  border-right: none;
+}
+
+.tb-cell:hover {
+  background-color: rgba(62, 52, 42, 0.08);
+}
+
+.tb-time {
+  min-width: 136px;
+  min-height: 96px;
+  border-bottom: 1px solid $ink_muted;
+  border-right: none;
+}
+
+.tb-network {
+  min-width: 136px;
+  min-height: 48px;
+  border-right: none;
+}
+
+.tb-date {
+  min-width: 128px;
+  min-height: 48px;
+}
+
+.tb-sheet {
+  min-width: 88px;
+  min-height: 48px;
+}
+
+.tb-project {
+  min-width: 168px;
+  min-height: 48px;
+}
+
+.tb-power {
+  min-width: 96px;
+  min-height: 48px;
+}
+
+.tb-battery {
+  min-width: 88px;
+  min-height: 48px;
+}
+
+.tb-profile {
+  min-width: 88px;
+  min-height: 48px;
+}
+
+.tb-cpumem {
+  min-width: 112px;
+  min-height: 48px;
+}
+
+.tb-temp {
+  min-width: 208px;
+  min-height: 48px;
+}
+
+.tb-processes {
+  min-width: 64px;
+  min-height: 48px;
+}
+
+.tb-drawn {
+  min-width: 112px;
+  min-height: 48px;
+}
+
+.tb-label {
+  font-size: 10px;
+  color: $ink_muted;
+}
+
+.tb-value {
+  font-size: 13px;
+  color: $ink;
+}
+
+.tb-time-val {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.tb-cell.alert,
+.tb-cell.alert .tb-label,
+.tb-cell.alert .tb-value {
+  color: $alert;
+}
