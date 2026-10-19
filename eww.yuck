@@ -1,5 +1,8 @@
 (defpoll readings :interval "2s" "scripts/readings.py")
+(deflisten workspaces :initial "[]" "python3 scripts/workspaces.py")
+(defpoll alerts :interval "3s" :initial "{\"urgent\": false, \"hot\": false, \"battery_low\": false, \"text\": \"\"}" "python3 scripts/alerts.py")
 
 (include "./yuck/background.yuck")
 (include "./yuck/title-block.yuck")
+(include "./yuck/top-margin.yuck")
 
