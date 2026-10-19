@@ -1,0 +1,59 @@
+.side-margin-band {
+  background-color: transparent;
+  min-width: 28px;
+  padding: 0;
+
+  &.left {
+    .side-cell {
+      border-right: 1px solid rgba($ink, 0.2);
+
+      &:hover {
+        border-right: 2px solid $accent;
+        background-color: rgba($accent, 0.15);
+      }
+    }
+  }
+
+  &.right {
+    .side-cell {
+      border-left: 1px solid rgba($ink, 0.2);
+
+      &:hover {
+        border-left: 2px solid $accent;
+        background-color: rgba($accent, 0.15);
+      }
+    }
+  }
+}
+
+.side-cell {
+  padding: 4px 2px;
+  transition: background-color $transition-base;
+
+  .side-letter {
+    font-size: $font-size-sm;
+    color: rgba($ink, 0.6);
+  }
+
+  .side-title {
+    font-size: $font-size-sm;
+    color: $ink;
+  }
+
+  &.occupied {
+    .side-letter {
+      color: $ink;
+      font-weight: bold;
+    }
+
+    .side-title {
+      color: $ink;
+    }
+  }
+
+  &.empty {
+    .side-letter {
+      color: rgba($ink, 0.35);
+    }
+  }
+}

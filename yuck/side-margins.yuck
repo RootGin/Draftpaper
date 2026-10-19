@@ -1,0 +1,50 @@
+(defwidget side-cell [slot]
+  (eventbox :onclick "python3 scripts/parked.py ${slot.occupied ? 'unpark' : 'park'} ${slot.cell}"
+            :cursor "pointer"
+            :class "side-cell ${slot.occupied ? 'occupied' : 'empty'}"
+    (box :class "side-cell-inner"
+         :orientation "v"
+         :space-evenly false
+      (label :class "side-letter"
+             :text "${slot.letter}")
+      (box :class "side-content"
+           :vexpand true
+           :valign "center"
+        (label :class "side-title"
+               :visible {slot.occupied}
+               :angle 90
+               :limit-width 18
+               :truncate true
+               :text "${slot.title}")))))
+
+(defwidget side-margins-left-widget []
+  (box :class "side-margin-band left"
+       :orientation "v"
+       :space-evenly true
+    (for slot in {parked_slots.left}
+      (side-cell :slot slot))))
+
+(defwidget side-margins-right-widget []
+  (box :class "side-margin-band right"
+       :orientation "v"
+       :space-evenly true
+    (for slot in {parked_slots.right}
+      (side-cell :slot slot))))
+
+(defwindow side-margins-left
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "left center")
+  :stacking "bottom"
+  :exclusive false
+  :focusable false
+  :namespace "draftpaper-margin"
+  (side-margins-left-widget))
+
+(defwindow side-margins-right
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "right center")
+  :stacking "bottom"
+  :exclusive false
+  :focusable false
+  :namespace "draftpaper-margin"
+  (side-margins-right-widget))
