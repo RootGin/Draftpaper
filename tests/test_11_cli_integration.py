@@ -185,6 +185,44 @@ class Test11CliIntegration(unittest.TestCase):
         )
         self.assertEqual(res.returncode, 0)
 
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            mock_bin_dir = Path(tmp_dir) / "bin"
+            mock_bin_dir.mkdir(parents=True, exist_ok=True)
+            mock_eww = mock_bin_dir / "eww"
+            log_file = Path(tmp_dir) / "eww_calls.log"
+
+            mock_eww.write_text(
+                f"#!/usr/bin/env bash\n"
+                f'echo "$@" >> "{log_file}"\n'
+                f"exit 0\n"
+            )
+            mock_eww.chmod(0o755)
+
+            mock_env = dict(
+                self.env,
+                PATH=f"{mock_bin_dir}:{os.environ.get('PATH', '')}",
+            )
+
+            res_open = subprocess.run(
+                [str(CLI_PATH), "daemon", "open"],
+                capture_output=True,
+                text=True,
+                env=mock_env,
+            )
+            self.assertEqual(res_open.returncode, 0)
+            calls = log_file.read_text()
+            for w in ["background", "title-block", "top-margin", "side-margins-left", "side-margins-right", "bottom-margin"]:
+                self.assertIn(w, calls)
+
+    def test_cli_subcommand_drawn_click(self):
+        res = subprocess.run(
+            [str(CLI_PATH), "drawn-click"],
+            capture_output=True,
+            text=True,
+            env=self.env,
+        )
+        self.assertEqual(res.returncode, 0)
+
     def test_cli_eww_config_flag_isolation(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             mock_bin_dir = Path(tmp_dir) / "bin"

@@ -47,6 +47,9 @@ class Test03TitleBlock(unittest.TestCase):
         data = json.loads(line)
         for key in REQUIRED_KEYS:
             self.assertIn(key, data, f"Missing required key '{key}' in readings.py output: {data}")
+        self.assertIn("cpu", data["temps"])
+        self.assertIn("nvme", data["temps"])
+        self.assertIn("ram", data["temps"])
 
     def test_alert_states(self):
         self.assertTrue(READINGS_SCRIPT.is_file(), f"{READINGS_SCRIPT} does not exist")
@@ -133,6 +136,9 @@ class Test03TitleBlock(unittest.TestCase):
         self.assertIn("title-block.yuck", yuck_content, "eww.yuck does not include yuck/title-block.yuck")
 
         scss_content = EWW_SCSS.read_text(encoding="utf-8")
+        tb_content = TITLE_BLOCK_YUCK.read_text(encoding="utf-8")
+        self.assertIn("tb-drawn", tb_content)
+        self.assertIn("drawn-click", tb_content)
         self.assertTrue(
             re.search(r'@import\s+["\'](?:\./)?scss/title-block(?:\.scss)?["\']\s*;', scss_content),
             f"eww.scss does not import scss/title-block: {scss_content}",

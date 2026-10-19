@@ -80,11 +80,13 @@
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "PROCESSES")
             (label :class "tb-value" :halign "start" :text "${readings.processes}")))
-        (box :class "tb-cell tb-drawn"
-             :orientation "v"
-             :space-evenly false
-          (label :class "tb-label" :halign "start" :text "DRAWN")
-          (label :class "tb-value" :halign "start" :text "${readings.drawn}"))))))
+        (eventbox :onclick "bin/draftpaper-eww drawn-click"
+                  :onrightclick "bin/draftpaper-eww drawn-click --right"
+          (box :class "tb-cell tb-drawn"
+               :orientation "v"
+               :space-evenly false
+            (label :class "tb-label" :halign "start" :text "DRAWN")
+            (label :class "tb-value" :halign "start" :text "${readings.drawn}")))))))
 
 (defwindow title-block
   :monitor 0

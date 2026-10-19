@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import shlex
 import subprocess
 import sys
 import time
@@ -168,16 +169,24 @@ def cmd_daemon(args, config_dir):
         res = run_eww(config_dir, ["reload"], capture=False)
         return res.returncode
     elif action == "open":
-        windows = args.extra if args.extra else ["canvas-window", "title-block-window", "margin-window"]
+        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "side-margins-left", "side-margins-right", "bottom-margin"]
         res = run_eww(config_dir, ["open-many"] + windows, capture=False)
         return res.returncode
     elif action == "close":
-        windows = args.extra if args.extra else ["canvas-window", "title-block-window", "margin-window"]
+        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "side-margins-left", "side-margins-right", "bottom-margin"]
         res = run_eww(config_dir, ["close"] + windows, capture=False)
         return res.returncode
     else:
         res = run_eww(config_dir, [action] + (args.extra or []), capture=False)
         return res.returncode
+
+
+def cmd_drawn_click(args, config_dir):
+    cmd = os.environ.get("DRAFTPAPER_DRAWN_RIGHTCLICK_CMD") if getattr(args, "right", False) else os.environ.get("DRAFTPAPER_DRAWN_CLICK_CMD")
+    if cmd:
+        res = subprocess.run(shlex.split(cmd))
+        return res.returncode
+    return 0
 
 
 def build_parser():
@@ -229,6 +238,9 @@ def build_parser():
     sub_daemon.add_argument("action", nargs="?", default="status", help="Action: start, stop, restart, ping, status, reload, open, close")
     sub_daemon.add_argument("extra", nargs="*", help="Additional arguments")
 
+    sub_drawn = subparsers.add_parser("drawn-click", help="Handle title-block DRAWN cell clicks")
+    sub_drawn.add_argument("--right", action="store_true", help="Right click")
+
     return parser
 
 
@@ -251,6 +263,7 @@ def main():
         "park": cmd_park,
         "screenshot": cmd_screenshot,
         "daemon": cmd_daemon,
+        "drawn-click": cmd_drawn_click,
     }
 
     handler = dispatch.get(args.subcommand)

@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import time
 import unittest
@@ -76,6 +77,20 @@ class Test08Schedules(unittest.TestCase):
         self.assertIn("columns", data)
         self.assertIn("rows", data)
         self.assertIsInstance(data["rows"], list)
+
+        env = dict(os.environ, DRAFTPAPER_ACTIVE_WINDOW_PID=str(os.getpid()))
+        proc_focused = subprocess.run(
+            ["python3", str(SCHEDULES_SCRIPT), "revisions"],
+            capture_output=True,
+            text=True,
+            cwd=str(WORKTREE_DIR),
+            env=env,
+            timeout=5,
+        )
+        self.assertEqual(proc_focused.returncode, 0)
+        data_focused = json.loads(proc_focused.stdout.strip())
+        self.assertIn("REVISIONS", data_focused["title"])
+        self.assertTrue(len(data_focused["rows"]) > 0)
 
     def test_schedules_script_outputs_combined_data_json(self):
         self.assertTrue(SCHEDULES_SCRIPT.is_file(), f"Missing script: {SCHEDULES_SCRIPT}")

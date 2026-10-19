@@ -7,6 +7,12 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from compositor import detect_compositor
+except ImportError:
+    from scripts.compositor import detect_compositor
+
 
 def get_state_file():
     return Path(os.environ.get("DRAFTPAPER_WORKSPACE_STATE", "/tmp/draftpaper-workspaces.json"))
@@ -64,39 +70,6 @@ def get_app_representation(app_id, use_glyphs=None):
             return glyph if use_glyphs else badge
     return DEFAULT_GLYPH if use_glyphs else DEFAULT_BADGE
 
-
-def detect_compositor():
-    override = os.environ.get("DRAFTPAPER_COMPOSITOR")
-    if override:
-        return override
-    if os.environ.get("NIRI_SOCKET"):
-        return "niri"
-    if os.environ.get("HYPRLAND_INSTANCE_SIGNATURE"):
-        return "hyprland"
-    if os.environ.get("SWAYSOCK"):
-        return "sway"
-    if shutil.which("hyprctl"):
-        try:
-            r = subprocess.run(["hyprctl", "-j", "activeworkspace"], capture_output=True, text=True, timeout=0.5)
-            if r.returncode == 0:
-                return "hyprland"
-        except Exception:
-            pass
-    if shutil.which("swaymsg"):
-        try:
-            r = subprocess.run(["swaymsg", "-t", "get_workspaces"], capture_output=True, text=True, timeout=0.5)
-            if r.returncode == 0:
-                return "sway"
-        except Exception:
-            pass
-    if shutil.which("niri"):
-        try:
-            r = subprocess.run(["niri", "msg", "-j", "workspaces"], capture_output=True, text=True, timeout=0.5)
-            if r.returncode == 0:
-                return "niri"
-        except Exception:
-            pass
-    return "fallback"
 
 
 def read_fallback_state():

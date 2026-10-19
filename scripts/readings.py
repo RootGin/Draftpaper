@@ -244,9 +244,9 @@ def get_network():
 
 
 def get_temps_and_fan():
-    temps_list = []
     cpu_deg = None
     nvme_deg = None
+    ram_deg = None
     fan_rpm = 0
     hot = False
     if HWMON_DIR.is_dir():
@@ -269,6 +269,19 @@ def get_temps_and_fan():
                 val = read_int(d / "temp1_input")
                 if val is not None:
                     nvme_deg = int(round(val / 1000.0))
+            elif (name in ["jc42", "spd5118", "dram", "dimm"] or "ram" in name.lower() or "dimm" in name.lower()) and ram_deg is None:
+                val = read_int(d / "temp1_input")
+                if val is not None:
+                    ram_deg = int(round(val / 1000.0))
+            if ram_deg is None:
+                for lbl_file in sorted(d.glob("temp*_label")):
+                    lbl = (read_file(lbl_file) or "").lower()
+                    if any(k in lbl for k in ["dimm", "ram", "dram", "memory"]):
+                        inp_file = Path(str(lbl_file).replace("_label", "_input"))
+                        val = read_int(inp_file)
+                        if val is not None:
+                            ram_deg = int(round(val / 1000.0))
+                            break
             if fan_rpm == 0:
                 fan_val = read_int(d / "fan1_input")
                 if fan_val is not None and fan_val > 0:
@@ -277,12 +290,24 @@ def get_temps_and_fan():
         cpu_deg = 45
     if nvme_deg is None:
         nvme_deg = 40
-    temps_list.append({"label": "CPU", "value": f"{cpu_deg}°"})
-    temps_list.append({"label": "NVME", "value": f"{nvme_deg}°"})
-    if cpu_deg >= 85 or nvme_deg >= 60 or fan_rpm >= 5000:
+    if ram_deg is None:
+        mock_ram = os.environ.get("DRAFTPAPER_RAM_TEMP")
+        ram_deg = int(mock_ram) if mock_ram and mock_ram.isdigit() else 35
+
+    temps_dict = {
+        "cpu": cpu_deg,
+        "nvme": nvme_deg,
+        "ram": ram_deg,
+    }
+    temps_list = [
+        {"label": "CPU", "value": f"{cpu_deg}°"},
+        {"label": "NVME", "value": f"{nvme_deg}°"},
+        {"label": "RAM", "value": f"{ram_deg}°"},
+    ]
+    if cpu_deg >= 85 or nvme_deg >= 60 or ram_deg >= 70 or fan_rpm >= 5000:
         hot = True
     temp_class = "alert" if hot else ""
-    return temps_list, cpu_deg, nvme_deg, fan_rpm, hot, temp_class
+    return temps_dict, temps_list, cpu_deg, nvme_deg, ram_deg, fan_rpm, hot, temp_class
 
 
 def get_processes():
@@ -315,7 +340,7 @@ def main():
     mem_text = f"{mem_pct}%"
     cpumem_text = f"󰻠 {cpu_text}  󰍛 {mem_text}"
     net_val = get_network()
-    temps_list, cpu_deg, nvme_deg, fan_rpm, hot, temp_class = get_temps_and_fan()
+    temps_dict, temps_list, cpu_deg, nvme_deg, ram_deg, fan_rpm, hot, temp_class = get_temps_and_fan()
     temp_text = f"󰘚 {cpu_deg}°  󰋊 {nvme_deg}°"
     fan_text = f"󰈐 {fan_rpm} RPM"
     tempfan_text = f"{temp_text}  {fan_text}"
@@ -340,7 +365,8 @@ def main():
         "memory_text": mem_text,
         "cpumem_text": cpumem_text,
         "network": net_val,
-        "temps": temps_list,
+        "temps": temps_dict,
+        "temps_list": temps_list,
         "temp_text": temp_text,
         "temp_alert": hot,
         "temp_class": temp_class,

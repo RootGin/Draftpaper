@@ -7,6 +7,12 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from compositor import detect_compositor, get_active_window
+except ImportError:
+    from scripts.compositor import detect_compositor, get_active_window
+
 
 def get_state_file():
     return Path(os.environ.get("DRAFTPAPER_PARKED_STATE", "/tmp/.draftpaper-parked.json"))
@@ -15,39 +21,6 @@ def get_state_file():
 DRAFTING_LETTERS = "ABCDEFGHJKLMNPQRSTUVWXYZ"
 ZONES_DOWN = 12
 
-
-def detect_compositor():
-    override = os.environ.get("DRAFTPAPER_COMPOSITOR")
-    if override:
-        return override
-    if os.environ.get("NIRI_SOCKET"):
-        return "niri"
-    if os.environ.get("HYPRLAND_INSTANCE_SIGNATURE"):
-        return "hyprland"
-    if os.environ.get("SWAYSOCK"):
-        return "sway"
-    if shutil.which("hyprctl"):
-        try:
-            r = subprocess.run(["hyprctl", "-j", "activeworkspace"], capture_output=True, text=True, timeout=0.5)
-            if r.returncode == 0:
-                return "hyprland"
-        except Exception:
-            pass
-    if shutil.which("niri"):
-        try:
-            r = subprocess.run(["niri", "msg", "-j", "workspaces"], capture_output=True, text=True, timeout=0.5)
-            if r.returncode == 0:
-                return "niri"
-        except Exception:
-            pass
-    if shutil.which("swaymsg"):
-        try:
-            r = subprocess.run(["swaymsg", "-t", "get_workspaces"], capture_output=True, text=True, timeout=0.5)
-            if r.returncode == 0:
-                return "sway"
-        except Exception:
-            pass
-    return "fallback"
 
 
 def read_state():
@@ -68,67 +41,6 @@ def write_state(data):
         json.dump(data, f)
     tmp.replace(sf)
 
-
-def get_active_window(comp):
-    if comp == "hyprland":
-        try:
-            res = subprocess.run(["hyprctl", "-j", "activewindow"], capture_output=True, text=True, timeout=1)
-            if res.returncode == 0:
-                data = json.loads(res.stdout)
-                addr = data.get("address", "")
-                title = data.get("title", "")
-                cls = data.get("class", "")
-                if addr:
-                    return {"id": addr, "title": title, "cls": cls}
-        except Exception:
-            pass
-    elif comp == "niri":
-        try:
-            res = subprocess.run(["niri", "msg", "-j", "focused-window"], capture_output=True, text=True, timeout=1)
-            if res.returncode == 0:
-                data = json.loads(res.stdout)
-                w_id = data.get("id")
-                title = data.get("title", "")
-                cls = data.get("app_id", "")
-                if w_id is not None:
-                    return {"id": str(w_id), "title": title, "cls": cls}
-        except Exception:
-            pass
-    elif comp == "sway":
-        try:
-            res = subprocess.run(["swaymsg", "-t", "get_tree"], capture_output=True, text=True, timeout=1)
-            if res.returncode == 0:
-                tree = json.loads(res.stdout)
-                focused_node = None
-
-                def find_focused(node):
-                    nonlocal focused_node
-                    if node.get("focused"):
-                        focused_node = node
-                        return
-                    for c in node.get("nodes", []):
-                        find_focused(c)
-                        if focused_node:
-                            return
-                    for c in node.get("floating_nodes", []):
-                        find_focused(c)
-                        if focused_node:
-                            return
-
-                find_focused(tree)
-                if focused_node:
-                    return {
-                        "id": str(focused_node.get("id")),
-                        "title": focused_node.get("name", ""),
-                        "cls": focused_node.get("app_id") or focused_node.get("window_properties", {}).get("class", ""),
-                    }
-        except Exception:
-            pass
-    return {
-        "id": "win-demo",
-        "title": "Terminal",
-        "cls": "Alacritty",
-    }
 
 
 def perform_park(cell):
@@ -210,7 +122,7 @@ def build_slots_payload():
 
     for idx in range(ZONES_DOWN):
         cell_id = idx + ZONES_DOWN
-        letter = DRAFTING_LETTERS[idx % len(DRAFTING_LETTERS)]
+        letter = DRAFTING_LETTERS[(idx + ZONES_DOWN) % len(DRAFTING_LETTERS)]
         item = parked_map.get(cell_id)
         right_slots.append({
             "cell": cell_id,

@@ -298,20 +298,20 @@ def launch_app(target, dry_run=False):
     eww_call(["close", "launcher"])
 
 
-def handle_up(cur_str, total_str):
-    cur = int(cur_str)
-    tot = int(total_str)
-    nxt = (cur - 1) % tot if tot > 0 else 0
-    eww_call(["update", f"launcher_index={nxt}"])
-    sys.stdout.write(f"{nxt}\n")
+def handle_up(current_index_str, total_items_str):
+    current_index = int(current_index_str)
+    total_items = int(total_items_str)
+    next_index = (current_index - 1) % total_items if total_items > 0 else 0
+    eww_call(["update", f"launcher_index={next_index}"])
+    sys.stdout.write(f"{next_index}\n")
 
 
-def handle_down(cur_str, total_str):
-    cur = int(cur_str)
-    tot = int(total_str)
-    nxt = (cur + 1) % tot if tot > 0 else 0
-    eww_call(["update", f"launcher_index={nxt}"])
-    sys.stdout.write(f"{nxt}\n")
+def handle_down(current_index_str, total_items_str):
+    current_index = int(current_index_str)
+    total_items = int(total_items_str)
+    next_index = (current_index + 1) % total_items if total_items > 0 else 0
+    eww_call(["update", f"launcher_index={next_index}"])
+    sys.stdout.write(f"{next_index}\n")
 
 
 def handle_toggle():

@@ -7,6 +7,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from compositor import detect_compositor, get_active_window, get_process_cwd
+except ImportError:
+    from scripts.compositor import detect_compositor, get_active_window, get_process_cwd
+
 SYSFS_BASE = Path(os.environ.get("SYSFS_ROOT", "/sys"))
 PROC_BASE = Path(os.environ.get("PROC_ROOT", "/proc"))
 
@@ -359,7 +365,21 @@ def build_revisions():
     rows = []
     repo_name = ""
 
-    repo_dir = os.environ.get("DRAFTPAPER_REPO_DIR")
+    repo_dir = None
+    try:
+        active_win = get_active_window()
+        if active_win and active_win.get("pid"):
+            proc_cwd = get_process_cwd(active_win["pid"])
+            if proc_cwd:
+                cmd_check = ["git", "-C", proc_cwd, "rev-parse", "--show-toplevel"]
+                r_check = subprocess.run(cmd_check, capture_output=True, text=True, timeout=1)
+                if r_check.returncode == 0 and r_check.stdout.strip():
+                    repo_dir = r_check.stdout.strip()
+    except Exception:
+        pass
+
+    if not repo_dir:
+        repo_dir = os.environ.get("DRAFTPAPER_REPO_DIR")
     if not repo_dir:
         repo_dir = str(Path(__file__).resolve().parent.parent)
 

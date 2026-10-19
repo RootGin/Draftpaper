@@ -93,6 +93,15 @@ class Test02Background(unittest.TestCase):
             "eww.scss missing @import \"./scss/background\";",
         )
 
+    def test_wallpaper_support(self):
+        eww_yuck = WORKTREE_DIR / "eww.yuck"
+        bg_yuck = WORKTREE_DIR / "yuck" / "background.yuck"
+        self.assertIn("wallpaper_path", eww_yuck.read_text(encoding="utf-8"))
+        bg_content = bg_yuck.read_text(encoding="utf-8")
+        self.assertIn("wallpaper-layer", bg_content)
+        self.assertIn("wallpaper_path", bg_content)
+        self.assertRegex(bg_content, r"\(image\s+:path\s+wallpaper_path")
+
     def test_scss_tokens_and_compilation(self):
         scss_file = WORKTREE_DIR / "scss" / "background.scss"
         self.assertTrue(scss_file.is_file(), "background.scss does not exist")

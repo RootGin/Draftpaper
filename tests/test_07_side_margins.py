@@ -47,9 +47,10 @@ class Test07SideMargins(unittest.TestCase):
                 self.assertIn("cls", slot)
                 self.assertIn("window_id", slot)
                 self.assertIn("side", slot)
-                self.assertEqual(slot["side"], side)
-                self.assertNotIn("I", slot["letter"])
-                self.assertNotIn("O", slot["letter"])
+        left_letters = [slot["letter"] for slot in data["left"]]
+        right_letters = [slot["letter"] for slot in data["right"]]
+        self.assertEqual(left_letters, ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M"])
+        self.assertEqual(right_letters, ["N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"])
 
     def test_park_and_unpark_subcommands(self):
         script_path = WORKTREE_DIR / "scripts" / "parked.py"

@@ -11,6 +11,7 @@
 (defpoll active_theme :interval "3s" :initial "nord" "bash scripts/theme.sh current")
 (defpoll keyplan :interval "10s" :initial "{\"count\": 1, \"monitors\": [{\"name\": \"primary\", \"active\": true, \"label\": \"1\"}]}" "python3 scripts/keyplan.py")
 (defpoll schedule_data :interval "3s" "python3 scripts/schedules.py data")
+(defvar wallpaper_path "")
 
 (include "./yuck/background.yuck")
 (include "./yuck/title-block.yuck")

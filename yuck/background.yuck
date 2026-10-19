@@ -36,7 +36,11 @@
              :hexpand true
           (box :class "wallpaper-layer"
                :vexpand true
-               :hexpand true)))
+               :hexpand true
+            (image :path wallpaper_path
+                   :image-width 1920
+                   :image-height 1080
+                   :visible {wallpaper_path != ""}))))
       (box :class "margin-ticks-v"
            :orientation "vertical"
            :space-evenly true
