@@ -5,10 +5,16 @@
 (deflisten notifications :initial "{\"has_notification\": false, \"text\": \"\", \"count\": 0, \"waiting_count\": 0, \"urgency\": \"normal\", \"id\": 0}" "python3 scripts/notifications.py")
 (defvar end-notifications "")
 (defvar osd_data "{\"type\": \"none\", \"value\": 0, \"text\": \"\", \"icon\": \"\", \"visible\": false}")
+(defpoll bluetooth :interval "5s" :initial "{\"connected\": false, \"powered\": false, \"icon\": \"󰂯\", \"text\": \"NO DEVICES\", \"devices\": []}" "bash scripts/peripherals.sh")
+(defpoll scale_text :interval "60s" :initial "100mm true scale" "python3 scripts/scale_bar.py")
+(defpoll active_theme :interval "3s" :initial "nord" "bash scripts/theme.sh current")
+(defpoll keyplan :interval "10s" :initial "{\"count\": 1, \"monitors\": [{\"name\": \"primary\", \"active\": true, \"label\": \"1\"}]}" "python3 scripts/keyplan.py")
 
 (include "./yuck/background.yuck")
 (include "./yuck/title-block.yuck")
 (include "./yuck/top-margin.yuck")
 (include "./yuck/side-margins.yuck")
 (include "./yuck/notifications-osd.yuck")
+(include "./yuck/bottom-margin.yuck")
+
 

@@ -1,0 +1,74 @@
+(defwidget bottom-margin-widget []
+  (box :class "bottom-margin-band"
+       :orientation "h"
+       :space-evenly false
+    (box :class "bottom-margin-left"
+         :halign "start"
+         :orientation "h"
+         :space-evenly false
+      (eventbox :onclick "blueman-manager &"
+                :cursor "pointer"
+                :class "peripheral-cell ${bluetooth.connected ? 'connected' : ''}"
+        (box :class "peripheral-content"
+             :orientation "h"
+             :space-evenly false
+             :spacing 6
+          (label :class "peripheral-icon"
+                 :text "${bluetooth.icon}")
+          (label :class "peripheral-text"
+                 :text "${bluetooth.text}"))))
+    (box :class "bottom-margin-center"
+         :halign "center"
+         :hexpand true
+         :orientation "h"
+         :space-evenly false
+         :spacing 16
+      (box :class "scale-bar-container"
+           :orientation "h"
+           :space-evenly false
+           :spacing 6
+        (box :class "scale-bar-rule")
+        (label :class "scale-bar-label"
+               :text "${scale_text}"))
+      (box :class "keyplan-container"
+           :orientation "h"
+           :space-evenly false
+           :spacing 4
+        (for mon in {keyplan.monitors}
+          (box :class "keyplan-box ${mon.active ? 'active' : ''}"
+            (label :class "keyplan-label"
+                   :text "${mon.label}")))))
+    (box :class "bottom-margin-right"
+         :halign "end"
+         :orientation "h"
+         :space-evenly false
+         :spacing 8
+      (eventbox :onclick "scripts/screenshot.sh &"
+                :cursor "pointer"
+                :class "screenshot-button"
+        (box :orientation "h"
+             :space-evenly false
+             :spacing 4
+          (label :class "screenshot-icon"
+                 :text "󰹑")
+          (label :class "screenshot-label"
+                 :text "SHOT")))
+      (eventbox :onclick "scripts/theme.sh next"
+                :cursor "pointer"
+                :class "theme-cell"
+        (box :orientation "h"
+             :space-evenly false
+             :spacing 4
+          (label :class "theme-label"
+                 :text "THEME:")
+          (label :class "theme-name"
+                 :text "${active_theme}"))))))
+
+(defwindow bottom-margin
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "100%" :height "28px" :anchor "bottom center")
+  :stacking "bottom"
+  :exclusive false
+  :focusable false
+  :namespace "draftpaper-margin"
+  (bottom-margin-widget))
