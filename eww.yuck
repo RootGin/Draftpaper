@@ -1,3 +1,4 @@
+(defvar schedule_mode "none")
 (defpoll readings :interval "2s" "scripts/readings.py")
 (deflisten workspaces :initial "[]" "python3 scripts/workspaces.py")
 (defpoll alerts :interval "3s" :initial "{\"urgent\": false, \"hot\": false, \"battery_low\": false, \"text\": \"\"}" "python3 scripts/alerts.py")
@@ -9,6 +10,7 @@
 (defpoll scale_text :interval "60s" :initial "100mm true scale" "python3 scripts/scale_bar.py")
 (defpoll active_theme :interval "3s" :initial "nord" "bash scripts/theme.sh current")
 (defpoll keyplan :interval "10s" :initial "{\"count\": 1, \"monitors\": [{\"name\": \"primary\", \"active\": true, \"label\": \"1\"}]}" "python3 scripts/keyplan.py")
+(defpoll schedule_data :interval "3s" "python3 scripts/schedules.py data")
 
 (include "./yuck/background.yuck")
 (include "./yuck/title-block.yuck")
@@ -16,5 +18,5 @@
 (include "./yuck/side-margins.yuck")
 (include "./yuck/notifications-osd.yuck")
 (include "./yuck/bottom-margin.yuck")
-
+(include "./yuck/schedules.yuck")
 

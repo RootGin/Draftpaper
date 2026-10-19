@@ -1,0 +1,155 @@
+(defwidget schedule_table [title meta columns rows]
+  (box :class "schedule-container"
+       :orientation "v"
+       :space-evenly false
+    (box :class "schedule-header"
+         :orientation "h"
+         :space-evenly false
+      (label :class "schedule-title"
+             :halign "start"
+             :text "${title}")
+      (label :class "schedule-meta"
+             :halign "end"
+             :hexpand true
+             :text "${meta}"))
+    (box :class "schedule-thead"
+         :orientation "h"
+         :space-evenly false
+      (for col in columns
+        (box :class "schedule-th"
+             :hexpand {col.width == 0}
+             :halign "fill"
+          (label :class "schedule-th-label"
+                 :halign {col.width == 0 ? "start" : "start"}
+                 :text "${col.name}"))))
+    (box :class "schedule-tbody"
+         :orientation "v"
+         :space-evenly false
+      (for row in rows
+        (box :class "schedule-tr"
+             :orientation "v"
+             :space-evenly false
+          (box :class "schedule-tr-cells"
+               :orientation "h"
+               :space-evenly false
+            (for cell in {row.cells}
+              (box :class "schedule-td"
+                   :hexpand true
+                   :halign "fill"
+                (label :class "schedule-td-text"
+                       :halign "start"
+                       :limit-width 36
+                       :truncate true
+                       :text "${cell}"))))
+          (revealer :reveal {row.note != "" && row.note != "null"}
+                    :transition "none"
+            (box :class "schedule-note"
+                 :orientation "h"
+                 :space-evenly false
+              (label :class "schedule-note-text"
+                     :halign "start"
+                     :text "${row.note}"))))))))
+
+(defwidget process_table [title meta columns rows]
+  (box :class "schedule-container"
+       :orientation "v"
+       :space-evenly false
+    (box :class "schedule-header"
+         :orientation "h"
+         :space-evenly false
+      (label :class "schedule-title"
+             :halign "start"
+             :text "${title}")
+      (label :class "schedule-meta"
+             :halign "end"
+             :hexpand true
+             :text "${meta}"))
+    (box :class "schedule-thead"
+         :orientation "h"
+         :space-evenly false
+      (for col in columns
+        (box :class "schedule-th"
+             :hexpand {col.width == 0}
+             :halign "fill"
+          (label :class "schedule-th-label"
+                 :halign "start"
+                 :text "${col.name}"))))
+    (box :class "schedule-tbody"
+         :orientation "v"
+         :space-evenly false
+      (for row in rows
+        (box :class "schedule-tr-process"
+             :orientation "v"
+             :space-evenly false
+          (box :class "schedule-tr-cells"
+               :orientation "h"
+               :space-evenly false
+            (box :class "schedule-td td-no"
+                 :halign "start"
+              (label :class "schedule-td-text"
+                     :text "${row.no}"))
+            (box :class "schedule-td td-proc"
+                 :hexpand true
+                 :halign "fill"
+              (label :class "schedule-td-text"
+                     :halign "start"
+                     :limit-width 24
+                     :truncate true
+                     :text "${row.process}"))
+            (box :class "schedule-td td-pid"
+                 :halign "end"
+              (label :class "schedule-td-text"
+                     :text "${row.pid}"))
+            (box :class "schedule-td td-cpu"
+                 :halign "end"
+                 :orientation "v"
+                 :space-evenly false
+              (label :class "schedule-td-text"
+                     :halign "end"
+                     :text "${row.cpu}")
+              (scale :class {row.alert ? "schedule-bar alert" : "schedule-bar"}
+                     :min 0
+                     :max 100
+                     :value {row.share * 100}
+                     :active false))
+            (box :class "schedule-td td-mem"
+                 :halign "end"
+              (label :class "schedule-td-text"
+                     :text "${row.memory}"))
+            (box :class "schedule-td td-time"
+                 :halign "end"
+              (label :class "schedule-td-text"
+                     :text "${row.time}"))))))))
+
+(defwidget schedules_widget []
+  (revealer :reveal {schedule_mode != "none"}
+            :transition "crossfade"
+            :duration "240ms"
+    (box :class "schedules-window"
+         :orientation "v"
+         :space-evenly false
+      (box :visible {schedule_mode == "equipment"}
+        (schedule_table :title {schedule_data.equipment.title}
+                        :meta {schedule_data.equipment.meta}
+                        :columns {schedule_data.equipment.columns}
+                        :rows {schedule_data.equipment.rows}))
+      (box :visible {schedule_mode == "processes"}
+        (process_table :title {schedule_data.processes.title}
+                       :meta {schedule_data.processes.meta}
+                       :columns {schedule_data.processes.columns}
+                       :rows {schedule_data.processes.rows}))
+      (box :visible {schedule_mode == "revisions"}
+        (schedule_table :title {schedule_data.revisions.title}
+                        :meta {schedule_data.revisions.meta}
+                        :columns {schedule_data.revisions.columns}
+                        :rows {schedule_data.revisions.rows})))))
+
+(defwindow schedules
+  :monitor 0
+  :geometry (geometry :x "16px"
+                      :y "48px"
+                      :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  (schedules_widget))
