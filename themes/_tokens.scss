@@ -14,31 +14,45 @@ $tb-hover-bg: rgba($ink, 0.08);
 
 $tb-width: round(($frame-width / $zone-cols) * 2);
 $tb-height: round($frame-height / $zone-rows);
-$tb-row-height: round($tb-height / 4);
+$tb-rows: 4;
 
-$tb-time-width: 110px;
-$tb-date-width: 220px;
-$tb-sheet-width: 90px;
-$tb-project-width: $tb-width - $tb-time-width - $tb-date-width - $tb-sheet-width;
+$tb-cell-pad-h: 3px;
+$tb-cell-pad-v: 2px;
 
-$tb-power-width: 190px;
-$tb-battery-width: 210px;
-$tb-profile-width: $tb-width - $tb-power-width - $tb-battery-width;
+$tb-row0-cols: 4;
+$tb-row1-cols: 3;
+$tb-row2-cols: 2;
+$tb-row3-cols: 3;
 
-$tb-cpumem-width: 260px;
-$tb-network-width: $tb-width - $tb-cpumem-width;
+$tb-row0-w: round($tb-width / $tb-row0-cols);
+$tb-row1-w: round($tb-width / $tb-row1-cols);
+$tb-row2-w: round($tb-width / $tb-row2-cols);
+$tb-row3-w: round($tb-width / $tb-row3-cols);
 
-$tb-temp-width: 311px;
-$tb-processes-width: 130px;
-$tb-drawn-width: $tb-width - $tb-temp-width - $tb-processes-width;
+$tb-time-width: $tb-row0-w - (2 * $tb-cell-pad-h) - (2 * $tb-hairline);
+$tb-date-width: $tb-row0-w - (2 * $tb-cell-pad-h) - $tb-hairline;
+$tb-sheet-width: $tb-row0-w - (2 * $tb-cell-pad-h) - $tb-hairline;
+$tb-project-width: ($tb-width - (3 * $tb-row0-w)) - (2 * $tb-cell-pad-h) - $tb-hairline;
+
+$tb-power-width: $tb-row1-w - (2 * $tb-cell-pad-h) - (2 * $tb-hairline);
+$tb-battery-width: $tb-row1-w - (2 * $tb-cell-pad-h) - $tb-hairline;
+$tb-profile-width: ($tb-width - (2 * $tb-row1-w)) - (2 * $tb-cell-pad-h) - $tb-hairline;
+
+$tb-cpumem-width: $tb-row2-w - (2 * $tb-cell-pad-h) - (2 * $tb-hairline);
+$tb-network-width: ($tb-width - $tb-row2-w) - (2 * $tb-cell-pad-h) - $tb-hairline;
+
+$tb-temp-width: $tb-row3-w - (2 * $tb-cell-pad-h) - (2 * $tb-hairline);
+$tb-processes-width: $tb-row3-w - (2 * $tb-cell-pad-h) - $tb-hairline;
+$tb-drawn-width: ($tb-width - (2 * $tb-row3-w)) - (2 * $tb-cell-pad-h) - $tb-hairline;
+
+$tb-row0-height: round($tb-height / $tb-rows) - (2 * $tb-cell-pad-v) - (2 * $tb-hairline);
+$tb-row-height: round($tb-height / $tb-rows) - (2 * $tb-cell-pad-v) - $tb-hairline;
 
 $tb-label-size: 10px;
 $tb-label-sm-size: 9px;
-$tb-value-size: 16px;
-$tb-value-sm-size: 13px;
-$tb-time-size: 26px;
+$tb-value-size: 15px;
+$tb-value-sm-size: 12px;
+$tb-time-size: 24px;
+$tb-temp-size: 11px;
 
-$tb-cell-pad-v: 4px;
-$tb-cell-pad-h: 8px;
-$tb-cell-pad-h-sm: 6px;
 $transition-fast: 150ms ease;
