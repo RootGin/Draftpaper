@@ -1,7 +1,6 @@
 .side-margin-band {
   background-color: $paper;
   min-width: 28px;
-  padding: 28px 0;
 
   &.left {
     border-right: 1px solid rgba($ink, 0.45);
@@ -28,7 +27,33 @@
   }
 }
 
+.side-corner {
+  min-height: 28px;
+  background-color: $paper;
+
+  &.top {
+    border-bottom: 1px solid rgba($ink, 0.45);
+
+    label {
+      min-height: 27px;
+    }
+  }
+
+  &.bottom {
+    border-top: 1px solid rgba($ink, 0.45);
+
+    label {
+      min-height: 27px;
+    }
+  }
+}
+
+.side-cells {
+  min-width: 28px;
+}
+
 .side-cell {
+  background-color: $paper;
   padding: 4px 2px;
   border-bottom: 1px solid rgba($ink, 0.2);
   transition: background-color $transition-base;

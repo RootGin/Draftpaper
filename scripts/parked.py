@@ -20,7 +20,7 @@ def get_state_file():
 
 
 DRAFTING_LETTERS = "ABCDEFGHJKLMNPQRSTUVWXYZ"
-ZONES_DOWN = 12
+ZONES_DOWN = 4
 
 
 
@@ -123,7 +123,7 @@ def build_slots_payload():
 
     for idx in range(ZONES_DOWN):
         cell_id = idx + ZONES_DOWN
-        letter = DRAFTING_LETTERS[(idx + ZONES_DOWN) % len(DRAFTING_LETTERS)]
+        letter = DRAFTING_LETTERS[idx % len(DRAFTING_LETTERS)]
         item = parked_map.get(cell_id)
         right_slots.append({
             "cell": cell_id,

@@ -20,16 +20,32 @@
 (defwidget side-margins-left-widget []
   (box :class "side-margin-band left"
        :orientation "v"
-       :space-evenly true
-    (for slot in {parked_slots.left}
-      (side-cell :slot slot))))
+       :space-evenly false
+    (box :class "side-corner top"
+      (label :text ""))
+    (box :class "side-cells"
+         :orientation "v"
+         :space-evenly true
+         :vexpand true
+      (for slot in {parked_slots.left}
+        (side-cell :slot slot)))
+    (box :class "side-corner bottom"
+      (label :text ""))))
 
 (defwidget side-margins-right-widget []
   (box :class "side-margin-band right"
        :orientation "v"
-       :space-evenly true
-    (for slot in {parked_slots.right}
-      (side-cell :slot slot))))
+       :space-evenly false
+    (box :class "side-corner top"
+      (label :text ""))
+    (box :class "side-cells"
+         :orientation "v"
+         :space-evenly true
+         :vexpand true
+      (for slot in {parked_slots.right}
+        (side-cell :slot slot)))
+    (box :class "side-corner bottom"
+      (label :text ""))))
 
 (defwindow side-margins-left
   :monitor 0
