@@ -1,5 +1,5 @@
 .title-block-window {
-  background-color: transparent;
+  background-color: $paper;
   border: $tb-border-outer solid $ink;
   min-width: $tb-width;
   min-height: $tb-height;
@@ -33,6 +33,7 @@
 }
 
 .tb-cell {
+  background-color: $paper;
   padding: $tb-cell-pad-v $tb-cell-pad-h;
   transition: background-color $transition-fast;
 }
@@ -121,6 +122,7 @@ eventbox:hover .tb-cell {
 
 .tb-label-sm {
   font-size: $tb-label-sm-size;
+  color: $ink_muted;
 }
 
 .tb-value {
@@ -130,11 +132,13 @@ eventbox:hover .tb-cell {
 
 .tb-value-sm {
   font-size: $tb-value-sm-size;
+  color: $ink;
 }
 
 .tb-time-val {
   font-size: $tb-time-size;
   font-weight: bold;
+  color: $ink;
 }
 
 .tb-cell.alert,

@@ -28,7 +28,8 @@ $transition-base: 300ms ease;
 window#top-margin,
 window#bottom-margin,
 window#side-margins-left,
-window#side-margins-right {
+window#side-margins-right,
+window#title-block {
   background-color: $paper;
 }
 
