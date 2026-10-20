@@ -12,8 +12,8 @@ $tb-hairline: 1px;
 $tb-border-outer: 1px;
 $tb-hover-bg: rgba($ink, 0.08);
 
-$tb-width: round(($frame-width / $zone-cols) * 2);
-$tb-height: round($frame-height / $zone-rows);
+$tb-width: round(($frame-width / $zone-cols) * 2) + 1px;
+$tb-height: round($frame-height / $zone-rows) + 1px;
 $tb-rows: 4;
 
 $tb-cell-pad-h: 3px;
@@ -45,7 +45,7 @@ $tb-temp-width: $tb-row3-w - (2 * $tb-cell-pad-h) - (2 * $tb-hairline);
 $tb-processes-width: $tb-row3-w - (2 * $tb-cell-pad-h) - $tb-hairline;
 $tb-drawn-width: ($tb-width - (2 * $tb-row3-w)) - (2 * $tb-cell-pad-h) - $tb-hairline;
 
-$tb-row0-height: round($tb-height / $tb-rows) - (2 * $tb-cell-pad-v) - (2 * $tb-hairline);
+$tb-row0-height: round($tb-height / $tb-rows) - (2 * $tb-cell-pad-v) - (2 * $tb-hairline) + 1px;
 $tb-row-height: round($tb-height / $tb-rows) - (2 * $tb-cell-pad-v) - $tb-hairline;
 
 $tb-label-size: 10px;
