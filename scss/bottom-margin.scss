@@ -1,6 +1,7 @@
 .bottom-margin-band {
-  background-color: transparent;
-  padding: 0 $padding;
+  background-color: $paper;
+  border-top: 1px solid rgba($ink, 0.45);
+  padding: 0 28px;
   min-height: 28px;
 }
 
@@ -86,7 +87,7 @@
 }
 
 .bottom-margin-right {
-  padding: 2px 28px 2px 8px;
+  padding: 2px 0 2px 8px;
 }
 
 .screenshot-button {

@@ -1,25 +1,27 @@
 .side-margin-band {
-  background-color: transparent;
+  background-color: $paper;
   min-width: 28px;
-  padding: 0;
+  padding: 28px 0;
 
   &.left {
+    border-right: 1px solid rgba($ink, 0.45);
+
     .side-cell {
-      border-right: 1px solid rgba($ink, 0.2);
+      border-right: none;
 
       &:hover {
-        border-right: 2px solid $accent;
         background-color: rgba($accent, 0.15);
       }
     }
   }
 
   &.right {
+    border-left: 1px solid rgba($ink, 0.45);
+
     .side-cell {
-      border-left: 1px solid rgba($ink, 0.2);
+      border-left: none;
 
       &:hover {
-        border-left: 2px solid $accent;
         background-color: rgba($accent, 0.15);
       }
     }
@@ -28,7 +30,12 @@
 
 .side-cell {
   padding: 4px 2px;
+  border-bottom: 1px solid rgba($ink, 0.2);
   transition: background-color $transition-base;
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   .side-letter {
     font-size: $font-size-sm;

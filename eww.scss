@@ -25,6 +25,13 @@ $transition-base: 300ms ease;
   color: $ink;
 }
 
+window#top-margin,
+window#bottom-margin,
+window#side-margins-left,
+window#side-margins-right {
+  background-color: $paper;
+}
+
 .widget {
   margin: $margin;
   padding: $padding;
