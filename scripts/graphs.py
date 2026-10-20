@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -248,6 +249,29 @@ def compute_points(values, width=240, height=60):
     return " ".join(pts)
 
 
+def get_theme_colors():
+    ink = "#3E342A"
+    accent = "#E8B374"
+    try:
+        script_dir = Path(__file__).resolve().parent
+        theme_scss = script_dir.parent / "theme.scss"
+        if theme_scss.is_file():
+            m = re.search(r"themes/([a-zA-Z0-9_-]+)", theme_scss.read_text("utf-8"))
+            if m:
+                t_file = script_dir.parent / "themes" / f"{m.group(1)}.scss"
+                if t_file.is_file():
+                    c = t_file.read_text("utf-8")
+                    m_ink = re.search(r"\$ink:\s*(#[0-9a-fA-F]{3,8});", c)
+                    m_acc = re.search(r"\$accent:\s*(#[0-9a-fA-F]{3,8});", c)
+                    if m_ink:
+                        ink = m_ink.group(1)
+                    if m_acc:
+                        accent = m_acc.group(1)
+    except Exception:
+        pass
+    return ink, accent
+
+
 def generate_sparkline_svg(metric_name, values, points_str, width=240, height=60):
     svg_dir = Path("/tmp/draftpaper-graphs")
     try:
@@ -256,11 +280,12 @@ def generate_sparkline_svg(metric_name, values, points_str, width=240, height=60
         pass
     svg_file = svg_dir / f"sparkline-{metric_name}.svg"
 
+    ink, accent = get_theme_colors()
     svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">
-  <line x1="0" y1="10" x2="{width}" y2="10" stroke="rgba(62,52,42,0.18)" stroke-dasharray="3,3" stroke-width="1"/>
-  <line x1="0" y1="{height / 2}" x2="{width}" y2="{height / 2}" stroke="rgba(62,52,42,0.18)" stroke-dasharray="3,3" stroke-width="1"/>
-  <line x1="0" y1="{height - 10}" x2="{width}" y2="{height - 10}" stroke="rgba(62,52,42,0.18)" stroke-width="1"/>
-  <polyline fill="none" stroke="#E8B374" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="{points_str}"/>
+  <line x1="0" y1="10" x2="{width}" y2="10" stroke="{ink}" stroke-opacity="0.18" stroke-dasharray="3,3" stroke-width="1"/>
+  <line x1="0" y1="{height / 2}" x2="{width}" y2="{height / 2}" stroke="{ink}" stroke-opacity="0.18" stroke-dasharray="3,3" stroke-width="1"/>
+  <line x1="0" y1="{height - 10}" x2="{width}" y2="{height - 10}" stroke="{ink}" stroke-opacity="0.18" stroke-width="1"/>
+  <polyline fill="none" stroke="{accent}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="{points_str}"/>
 </svg>"""
     try:
         svg_file.write_text(svg_content, encoding="utf-8")

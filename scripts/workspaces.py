@@ -200,13 +200,17 @@ def get_workspaces_niri():
 
     focused_id = 1
     active_set = set()
+    ws_id_to_idx = {}
     if ws_res.returncode == 0:
         try:
             ws_data = json.loads(ws_res.stdout)
             for w in ws_data:
                 idx = w.get("idx")
+                w_id = w.get("id")
                 if isinstance(idx, int):
                     active_set.add(idx)
+                    if w_id is not None:
+                        ws_id_to_idx[w_id] = idx
                     if w.get("is_focused"):
                         focused_id = idx
         except Exception:
@@ -219,13 +223,14 @@ def get_workspaces_niri():
         try:
             windows = json.loads(win_res.stdout)
             for win in windows:
-                w_id = win.get("workspace_id")
-                if w_id in apps_by_ws:
-                    active_set.add(w_id)
+                raw_id = win.get("workspace_id")
+                target_idx = ws_id_to_idx.get(raw_id, raw_id)
+                if target_idx in apps_by_ws:
+                    active_set.add(target_idx)
                     app_id = win.get("app_id") or ""
                     rep = get_app_representation(app_id, use_glyphs=use_glyphs)
-                    if rep not in apps_by_ws[w_id] and len(apps_by_ws[w_id]) < 3:
-                        apps_by_ws[w_id].append(rep)
+                    if rep not in apps_by_ws[target_idx] and len(apps_by_ws[target_idx]) < 3:
+                        apps_by_ws[target_idx].append(rep)
         except Exception:
             pass
 

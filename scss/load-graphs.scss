@@ -62,7 +62,7 @@
 
 .rule-line {
   min-height: 1px;
-  border-bottom: 1px dashed rgba(62, 52, 42, 0.18);
+  border-bottom: 1px dashed rgba($ink, 0.18);
 }
 
 .rule-bottom {
@@ -81,7 +81,7 @@
 }
 
 .graph-footer {
-  border-top: 1px solid rgba(62, 52, 42, 0.25);
+  border-top: 1px solid rgba($ink, 0.25);
   padding-top: 4px;
   margin-top: 4px;
 }
