@@ -1,5 +1,5 @@
 (defvar schedule_mode "none")
-(defpoll readings :interval "2s" "scripts/readings.py")
+(defpoll readings :interval "2s" :initial "{\"time\": \"--\", \"date\": \"--\", \"sheet\": \"--\", \"project\": \"--\", \"power\": \"--\", \"battery\": 0, \"battery_text\": \"--\", \"battery_alert\": false, \"battery_class\": \"\", \"profile\": \"--\", \"profile_text\": \"--\", \"cpu\": 0, \"cpu_text\": \"--\", \"memory\": 0, \"memory_text\": \"--\", \"cpumem_text\": \"--\", \"network\": \"--\", \"temps\": {\"cpu\": 0, \"nvme\": 0, \"ram\": 0}, \"temps_list\": [], \"temp_text\": \"--\", \"temp_alert\": false, \"temp_class\": \"\", \"hot\": false, \"fan\": 0, \"fan_text\": \"--\", \"tempfan_text\": \"--\", \"processes\": \"--\", \"drawn\": \"--\", \"alerts\": {\"battery\": false, \"temp\": false}}" "scripts/readings.py")
 (deflisten workspaces :initial "[]" "python3 scripts/workspaces.py")
 (defpoll alerts :interval "3s" :initial "{\"urgent\": false, \"hot\": false, \"battery_low\": false, \"text\": \"\"}" "python3 scripts/alerts.py")
 (deflisten parked_slots :initial "{\"left\": [], \"right\": []}" "python3 scripts/parked.py")

@@ -1,113 +1,139 @@
 .title-block-window {
   background-color: transparent;
-  border: 2px solid $ink;
+  border: $tb-border-outer solid $ink;
+  min-width: $tb-width;
+  min-height: $tb-height;
 }
 
 .title-col-left {
-  border-right: 1px solid $ink_muted;
+  min-width: $tb-col-left-width;
+  min-height: $tb-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .title-col-right {
-  min-width: 384px;
+  min-width: $tb-col-right-width;
+  min-height: $tb-height;
 }
 
 .tb-row {
-  border-bottom: 1px solid $ink_muted;
+  min-width: $tb-col-right-width;
+  min-height: $tb-row-height;
 }
 
-.tb-row:last-child {
-  border-bottom: none;
+.tb-row-0 {
+  border-bottom: $tb-hairline solid $ink_muted;
+}
+
+.tb-row-1 {
+  border-bottom: $tb-hairline solid $ink_muted;
+}
+
+.tb-row-2 {
 }
 
 .tb-cell {
-  padding: 4px 6px;
-  border-right: 1px solid $ink_muted;
-  transition: background-color 150ms ease;
+  padding: $tb-cell-pad-v $tb-cell-pad-h;
+  transition: background-color $transition-fast;
 }
 
-.tb-row .tb-cell:last-child {
-  border-right: none;
+.tb-cell-pad-sm {
+  padding: $tb-cell-pad-v $tb-cell-pad-h-sm;
 }
 
-.tb-cell:hover {
-  background-color: rgba(62, 52, 42, 0.08);
+.tb-cell:hover,
+eventbox:hover .tb-cell {
+  background-color: $tb-hover-bg;
 }
 
 .tb-time {
-  min-width: 136px;
-  min-height: 96px;
-  border-bottom: 1px solid $ink_muted;
-  border-right: none;
+  min-width: $tb-col-left-width;
+  min-height: $tb-time-height;
+  border-bottom: $tb-hairline solid $ink_muted;
 }
 
 .tb-network {
-  min-width: 136px;
-  min-height: 48px;
-  border-right: none;
+  min-width: $tb-col-left-width;
+  min-height: $tb-network-height;
 }
 
 .tb-date {
-  min-width: 128px;
-  min-height: 48px;
+  min-width: $tb-date-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .tb-sheet {
-  min-width: 88px;
-  min-height: 48px;
+  min-width: $tb-sheet-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .tb-project {
-  min-width: 168px;
-  min-height: 48px;
+  min-width: $tb-project-width;
+  min-height: $tb-row-height;
 }
 
 .tb-power {
-  min-width: 96px;
-  min-height: 48px;
+  min-width: $tb-power-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .tb-battery {
-  min-width: 88px;
-  min-height: 48px;
+  min-width: $tb-battery-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .tb-profile {
-  min-width: 88px;
-  min-height: 48px;
+  min-width: $tb-profile-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .tb-cpumem {
-  min-width: 112px;
-  min-height: 48px;
+  min-width: $tb-cpumem-width;
+  min-height: $tb-row-height;
 }
 
 .tb-temp {
-  min-width: 208px;
-  min-height: 48px;
+  min-width: $tb-temp-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .tb-processes {
-  min-width: 64px;
-  min-height: 48px;
+  min-width: $tb-processes-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid $ink_muted;
 }
 
 .tb-drawn {
-  min-width: 112px;
-  min-height: 48px;
+  min-width: $tb-drawn-width;
+  min-height: $tb-row-height;
 }
 
 .tb-label {
-  font-size: 10px;
+  font-size: $tb-label-size;
   color: $ink_muted;
 }
 
+.tb-label-sm {
+  font-size: $tb-label-sm-size;
+}
+
 .tb-value {
-  font-size: 13px;
+  font-size: $tb-value-size;
   color: $ink;
 }
 
+.tb-value-sm {
+  font-size: $tb-value-sm-size;
+}
+
 .tb-time-val {
-  font-size: 32px;
+  font-size: $tb-time-size;
   font-weight: bold;
 }
 

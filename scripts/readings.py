@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import datetime
 import json
 import os
@@ -60,7 +61,7 @@ def get_active_profile():
         saved = read_file(fallback_file)
         if saved in ORDERED_PROFILES:
             return saved
-    return "balanced"
+    return "--"
 
 
 def set_active_profile(profile):
@@ -138,10 +139,10 @@ def get_sheet():
 def get_power_and_battery():
     power_supply_dir = POWER_DIR
     if not power_supply_dir.is_dir():
-        return "mains", 100, "100%", False, ""
+        return "mains", 0, "--", False, ""
     bats = sorted([d for d in power_supply_dir.iterdir() if d.name.startswith("BAT")])
     if not bats:
-        return "mains", 100, "100%", False, ""
+        return "mains", 0, "--", False, ""
     power_str = "mains"
     bat_pct = 100
     bat_alert = False
@@ -240,7 +241,7 @@ def get_network():
                 state = read_file(iface / "operstate")
                 if state == "up":
                     return "wired"
-    return "disconnected"
+    return "--"
 
 
 def get_temps_and_fan():
@@ -332,9 +333,12 @@ def main():
     project_str = socket.gethostname() or "draftpaper"
     power_str, bat_pct, bat_text, bat_alert, bat_class = get_power_and_battery()
     profile = get_active_profile()
-    profile_glyph = PROFILE_GLYPHS.get(profile, "󰾅")
-    profile_short = PROFILE_SHORTS.get(profile, profile)
-    profile_text = f"{profile_glyph} {profile_short}"
+    if not profile or profile == "--":
+        profile_text = "--"
+    else:
+        profile_glyph = PROFILE_GLYPHS.get(profile, "󰾅")
+        profile_short = PROFILE_SHORTS.get(profile, profile)
+        profile_text = f"{profile_glyph} {profile_short}"
     cpu_pct, mem_pct = get_cpu_and_mem()
     cpu_text = f"{cpu_pct}%"
     mem_text = f"{mem_pct}%"
@@ -345,6 +349,7 @@ def main():
     fan_text = f"󰈐 {fan_rpm} RPM"
     tempfan_text = f"{temp_text}  {fan_text}"
     procs = get_processes()
+    procs_val = procs if procs > 0 else "--"
     drawn_str = os.environ.get("DRAFTPAPER_DRAWN", "RootGin")
 
     output = {
@@ -374,13 +379,16 @@ def main():
         "fan": fan_rpm,
         "fan_text": fan_text,
         "tempfan_text": tempfan_text,
-        "processes": procs,
+        "processes": procs_val,
         "drawn": drawn_str,
         "alerts": {
             "battery": bat_alert,
             "temp": hot,
         },
     }
+    for k, v in output.items():
+        if k not in ["battery_class", "temp_class"] and (v is None or (isinstance(v, str) and not v.strip())):
+            output[k] = "--"
     print(json.dumps(output))
 
 

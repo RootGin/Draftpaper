@@ -9,36 +9,36 @@
            :orientation "v"
            :space-evenly false
         (label :class "tb-label" :halign "start" :text "TIME")
-        (label :class "tb-value tb-time-val" :halign "start" :text "${readings.time}"))
+        (label :class "tb-value tb-time-val" :halign "start" :limit-width 8 :truncate true :text "${readings.time}"))
       (eventbox :onclick "draftpaper graph network 2>/dev/null || python3 scripts/graphs.py toggle network"
         (box :class "tb-cell tb-network"
              :orientation "v"
              :space-evenly false
           (label :class "tb-label" :halign "start" :text "NETWORK")
-          (label :class "tb-value" :halign "start" :text "${readings.network}"))))
+          (label :class "tb-value tb-value-sm" :halign "start" :limit-width 16 :truncate true :text "${readings.network}"))))
     (box :class "title-col-right"
          :orientation "v"
          :space-evenly false
-      (box :class "tb-row"
+      (box :class "tb-row tb-row-0"
            :orientation "h"
            :space-evenly false
         (box :class "tb-cell tb-date"
              :orientation "v"
              :space-evenly false
           (label :class "tb-label" :halign "start" :text "DATE")
-          (label :class "tb-value" :halign "start" :text "${readings.date}"))
+          (label :class "tb-value tb-value-sm" :halign "start" :limit-width 16 :truncate true :text "${readings.date}"))
         (box :class "tb-cell tb-sheet"
              :orientation "v"
              :space-evenly false
           (label :class "tb-label" :halign "start" :text "SHEET")
-          (label :class "tb-value" :halign "start" :text "${readings.sheet}"))
+          (label :class "tb-value" :halign "start" :limit-width 6 :truncate true :text "${readings.sheet}"))
         (eventbox :onclick "draftpaper schedule equipment 2>/dev/null || true"
           (box :class "tb-cell tb-project"
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "PROJECT")
-            (label :class "tb-value" :halign "start" :text "${readings.project}"))))
-      (box :class "tb-row"
+            (label :class "tb-value" :halign "start" :limit-width 18 :truncate true :text "${readings.project}"))))
+      (box :class "tb-row tb-row-1"
            :orientation "h"
            :space-evenly false
         (eventbox :onclick "draftpaper graph power 2>/dev/null || python3 scripts/graphs.py toggle power"
@@ -46,26 +46,26 @@
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "POWER")
-            (label :class "tb-value" :halign "start" :text "${readings.power}")))
+            (label :class "tb-value" :halign "start" :limit-width 10 :truncate true :text "${readings.power}")))
         (eventbox :onclick "draftpaper graph battery 2>/dev/null || python3 scripts/graphs.py toggle battery"
           (box :class {readings.battery_alert ? "tb-cell tb-battery alert" : "tb-cell tb-battery"}
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "BATTERY")
-            (label :class "tb-value" :halign "start" :text "${readings.battery_text}")))
+            (label :class "tb-value" :halign "start" :limit-width 10 :truncate true :text "${readings.battery_text}")))
         (eventbox :onclick "scripts/readings.py --cycle-profile"
           (box :class "tb-cell tb-profile"
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "PROFILE")
-            (label :class "tb-value" :halign "start" :text "${readings.profile_text}")))
+            (label :class "tb-value tb-value-sm" :halign "start" :limit-width 10 :truncate true :text "${readings.profile_text}")))
         (eventbox :onclick "draftpaper graph load 2>/dev/null || python3 scripts/graphs.py toggle cpu"
           (box :class "tb-cell tb-cpumem"
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "CPU / MEMORY")
-            (label :class "tb-value" :halign "start" :text "${readings.cpumem_text}"))))
-      (box :class "tb-row"
+            (label :class "tb-value tb-value-sm" :halign "start" :limit-width 15 :truncate true :text "${readings.cpumem_text}"))))
+      (box :class "tb-row tb-row-2"
            :orientation "h"
            :space-evenly false
         (eventbox :onclick "draftpaper graph temp 2>/dev/null || python3 scripts/graphs.py toggle temp"
@@ -73,20 +73,20 @@
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "TEMPERATURE · FAN")
-            (label :class "tb-value" :halign "start" :text "${readings.tempfan_text}")))
+            (label :class "tb-value tb-value-sm" :halign "start" :limit-width 24 :truncate true :text "${readings.tempfan_text}")))
         (eventbox :onclick "draftpaper schedule processes 2>/dev/null || true"
-          (box :class "tb-cell tb-processes"
+          (box :class "tb-cell tb-processes tb-cell-pad-sm"
                :orientation "v"
                :space-evenly false
-            (label :class "tb-label" :halign "start" :text "PROCESSES")
-            (label :class "tb-value" :halign "start" :text "${readings.processes}")))
+            (label :class "tb-label tb-label-sm" :halign "start" :limit-width 9 :truncate true :text "PROCESSES")
+            (label :class "tb-value" :halign "start" :limit-width 6 :truncate true :text "${readings.processes}")))
         (eventbox :onclick "bin/draftpaper-eww drawn-click"
                   :onrightclick "bin/draftpaper-eww drawn-click --right"
           (box :class "tb-cell tb-drawn"
                :orientation "v"
                :space-evenly false
             (label :class "tb-label" :halign "start" :text "DRAWN")
-            (label :class "tb-value" :halign "start" :text "${readings.drawn}")))))))
+            (label :class "tb-value" :halign "start" :limit-width 12 :truncate true :text "${readings.drawn}")))))))
 
 (defwindow title-block
   :monitor 0
