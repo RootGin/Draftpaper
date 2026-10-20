@@ -6,7 +6,7 @@ if [ "${DRAFTPAPER_GLYPHS:-}" = "0" ] || [ "${NERD_FONTS:-}" = "0" ]; then
     use_glyphs=0
 elif [ "${DRAFTPAPER_GLYPHS:-}" = "1" ] || [ "${NERD_FONTS:-}" = "1" ]; then
     use_glyphs=1
-elif ! fc-list : family 2>/dev/null | grep -q "Nerd Font"; then
+elif [ -z "$(fc-list : family 2>/dev/null | grep -m1 "Nerd Font" || true)" ]; then
     use_glyphs=0
 fi
 

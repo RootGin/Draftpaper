@@ -5,17 +5,31 @@
   min-height: 28px;
 }
 
-.bottom-margin-left {
-  padding: 2px 0;
+.margin-zone {
+  border-right: 1px solid rgba($ink, 0.45);
+  min-height: 28px;
+
+  &.zone-6,
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.zone-content {
+  padding: 0 8px;
+  min-height: 28px;
+}
+
+.zone-digit {
+  font-size: $font-size;
+  color: $ink_muted;
 }
 
 .peripheral-cell {
   padding: 2px 8px;
-  border-right: 1px solid rgba($ink, 0.2);
-  transition: background-color $transition-base;
 
   .peripheral-icon {
-    font-size: $font-size-sm;
+    font-size: $font-size;
     color: $ink_muted;
   }
 
@@ -33,102 +47,41 @@
   }
 
   &:hover {
-    background-color: rgba($accent, 0.15);
-  }
-}
-
-.bottom-margin-center {
-  padding: 2px 0;
-}
-
-.scale-bar-container {
-  padding: 2px 10px;
-  border-left: 1px solid rgba($ink, 0.2);
-  border-right: 1px solid rgba($ink, 0.2);
-
-  .scale-bar-rule {
-    min-height: 2px;
-    background-color: $ink_muted;
-    margin: 6px 0;
-  }
-
-  .scale-bar-label {
-    font-size: $font-size-sm;
-    color: $ink_muted;
-    letter-spacing: 1px;
-  }
-}
-
-.keyplan-container {
-  padding: 2px 6px;
-
-  .keyplan-box {
-    border: 1px solid rgba($ink, 0.4);
-    min-width: 14px;
-    min-height: 10px;
-    padding: 1px 3px;
-    background-color: transparent;
-
-    .keyplan-label {
-      font-size: 10px;
-      color: $ink_muted;
-    }
-
-    &.active {
-      border: 1px solid $strong;
-      background-color: rgba($ink, 0.15);
-
-      .keyplan-label {
-        color: $strong;
-        font-weight: bold;
-      }
+    .peripheral-icon,
+    .peripheral-text {
+      color: $strong;
     }
   }
-}
-
-.bottom-margin-right {
-  padding: 2px 0 2px 8px;
 }
 
 .screenshot-button {
-  min-width: 64px;
-  padding: 2px 8px;
-  border: 1px solid rgba($ink, 0.2);
-  transition: background-color $transition-base;
+  padding: 2px 4px;
 
   .screenshot-icon {
-    font-size: $font-size-sm;
-    color: $ink;
-  }
-
-  .screenshot-label {
-    font-size: $font-size-sm;
+    font-size: $font-size;
     color: $ink;
   }
 
   &:hover {
-    background-color: rgba($accent, 0.2);
+    .screenshot-icon {
+      color: $strong;
+    }
   }
 }
 
 .theme-cell {
-  min-width: 110px;
-  padding: 2px 8px;
-  border: 1px solid rgba($ink, 0.2);
-  transition: background-color $transition-base;
-
-  .theme-label {
-    font-size: $font-size-sm;
-    color: $ink;
-  }
+  padding: 2px 4px;
 
   .theme-name {
-    font-size: $font-size-sm;
-    color: $strong;
+    font-size: $font-size;
+    color: $ink;
     font-weight: bold;
+    letter-spacing: 1px;
   }
 
   &:hover {
-    background-color: rgba($accent, 0.2);
+    .theme-name {
+      color: $strong;
+    }
   }
 }

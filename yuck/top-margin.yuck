@@ -1,37 +1,80 @@
 (defwidget top-margin-widget []
   (box :class "top-margin-band"
        :orientation "h"
-       :space-evenly false
-    (box :class "top-margin-left"
-         :halign "start"
-         :orientation "h"
-         :space-evenly false
-      (for ws in workspaces
-        (eventbox :onclick "python3 scripts/workspaces.py switch ${ws.id}"
+       :space-evenly true
+    (box :class "margin-zone zone-1"
+      (box :class "zone-content"
+           :halign "center"
+           :valign "center"
+           :orientation "h"
+           :space-evenly false
+           :spacing 6
+        (for ws in workspaces
+          (box :visible {ws.focused}
+            (eventbox :onclick "python3 scripts/workspaces.py switch ${ws.id}"
+                      :cursor "pointer"
+                      :class "workspace-slot focused"
+              (box :orientation "h"
+                   :space-evenly false
+                   :spacing 4
+                (label :class "workspace-num"
+                       :text "${ws.name}")
+                (box :class "workspace-apps"
+                     :orientation "h"
+                     :space-evenly false
+                     :spacing 2
+                  (for app in {ws.apps}
+                    (label :class "workspace-glyph"
+                           :text "${app}")))))))))
+    (box :class "margin-zone zone-2"
+      (eventbox :onclick "python3 scripts/workspaces.py switch 2"
+                :cursor "pointer"
+                :class "zone-digit-button"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "2"))))
+    (box :class "margin-zone zone-3"
+      (eventbox :onclick "python3 scripts/workspaces.py switch 3"
+                :cursor "pointer"
+                :class "zone-digit-button"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "3"))))
+    (box :class "margin-zone zone-4"
+      (eventbox :onclick "python3 scripts/workspaces.py switch 4"
+                :cursor "pointer"
+                :class "zone-digit-button"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "4"))))
+    (box :class "margin-zone zone-5"
+      (eventbox :onclick "python3 scripts/workspaces.py switch 5"
+                :cursor "pointer"
+                :class "zone-digit-button"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "5"))))
+    (box :class "margin-zone zone-6"
+      (box :class "zone-content"
+           :halign "center"
+           :valign "center"
+        (label :class "margin-alert"
+               :visible {alerts.urgent}
+               :text "${alerts.text}")
+        (eventbox :visible {!alerts.urgent}
+                  :onclick "python3 scripts/workspaces.py switch 6"
                   :cursor "pointer"
-                  :class "workspace-cell ${ws.focused ? 'focused' : ''} ${ws.active ? 'occupied' : 'empty'}"
-          (box :class "workspace-content"
-               :orientation "h"
-               :space-evenly false
-               :spacing 4
-            (label :class "workspace-num"
-                   :text "${ws.name}")
-            (box :class "workspace-apps"
-                 :orientation "h"
-                 :space-evenly false
-                 :spacing 2
-              (for app in {ws.apps}
-                (label :class "workspace-glyph"
-                       :text "${app}")))))))
-    (box :class "top-margin-center"
-         :hexpand true)
-    (box :class "top-margin-right"
-         :halign "end"
-         :orientation "h"
-         :space-evenly false
-      (label :class "margin-alert"
-             :visible {alerts.urgent}
-             :text "${alerts.text}"))))
+                  :class "zone-digit-button"
+          (label :class "zone-digit"
+                 :text "6"))))))
 
 (defwindow top-margin
   :monitor 0

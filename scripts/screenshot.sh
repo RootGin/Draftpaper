@@ -5,6 +5,11 @@ TARGET_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}"
 mkdir -p "$TARGET_DIR"
 FILENAME="$TARGET_DIR/screenshot-$(date +%Y%m%d-%H%M%S).png"
 
+if [ "${DRAFTPAPER_MOCK:-}" = "1" ]; then
+    touch "$FILENAME"
+    exit 0
+fi
+
 if command -v grim >/dev/null 2>&1; then
     if command -v slurp >/dev/null 2>&1; then
         GEOM=$(slurp 2>/dev/null || true)

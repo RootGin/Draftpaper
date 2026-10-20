@@ -5,19 +5,27 @@
   min-height: 28px;
 }
 
-.top-margin-left {
-  padding: 2px 0;
+.margin-zone {
+  border-right: 1px solid rgba($ink, 0.45);
+  min-height: 28px;
+
+  &.zone-6,
+  &:last-child {
+    border-right: none;
+  }
 }
 
-.workspace-cell {
-  padding: 2px 8px;
-  margin-right: 2px;
-  border-right: 1px solid rgba($ink, 0.2);
-  transition: background-color $transition-base;
+.zone-content {
+  padding: 0 8px;
+  min-height: 28px;
+}
+
+.workspace-slot {
+  padding: 0 4px;
 
   .workspace-num {
     font-size: $font-size;
-    color: $ink_muted;
+    color: $ink;
   }
 
   .workspace-glyph {
@@ -25,35 +33,38 @@
     color: $ink_muted;
   }
 
-  &.occupied {
-    .workspace-num,
-    .workspace-glyph {
-      color: $ink;
-    }
-  }
-
   &.focused {
-    .workspace-num,
-    .workspace-glyph {
+    .workspace-num {
       color: $strong;
       font-weight: bold;
     }
-  }
 
-  &.empty {
-    .workspace-num,
     .workspace-glyph {
-      color: rgba($ink, 0.35);
+      color: $strong;
     }
   }
 
   &:hover {
-    background-color: rgba($accent, 0.15);
+    .workspace-num,
+    .workspace-glyph {
+      color: $strong;
+    }
   }
 }
 
-.top-margin-right {
+.zone-digit-button {
   padding: 2px 8px;
+
+  .zone-digit {
+    font-size: $font-size;
+    color: $ink_muted;
+  }
+
+  &:hover {
+    .zone-digit {
+      color: $strong;
+    }
+  }
 }
 
 .margin-alert {

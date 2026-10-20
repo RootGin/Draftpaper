@@ -35,8 +35,31 @@ set_theme() {
     if command -v eww >/dev/null 2>&1; then
         eww -c "$ROOT_DIR" reload >/dev/null 2>&1 || true
         eww -c "$ROOT_DIR" update active_theme="$target" >/dev/null 2>&1 || true
+        local label
+        case "$target" in
+            softglow) label="SOFT GLOW" ;;
+            blueprint) label="BLUEPRINT" ;;
+            daypanel) label="DAY PANEL" ;;
+            nightpanel) label="NIGHT PANEL" ;;
+            nord) label="NORD" ;;
+            *) label="${target^^}" ;;
+        esac
+        eww -c "$ROOT_DIR" update active_theme_label="$label" >/dev/null 2>&1 || true
     fi
     echo "$target"
+}
+
+get_theme_label() {
+    local cur
+    cur=$(get_current_theme)
+    case "$cur" in
+        softglow) echo "SOFT GLOW" ;;
+        blueprint) echo "BLUEPRINT" ;;
+        daypanel) echo "DAY PANEL" ;;
+        nightpanel) echo "NIGHT PANEL" ;;
+        nord) echo "NORD" ;;
+        *) echo "${cur^^}" ;;
+    esac
 }
 
 rotate_theme() {
@@ -60,6 +83,9 @@ action="${1:-current}"
 case "$action" in
     current|get|name)
         get_current_theme
+        ;;
+    label)
+        get_theme_label
         ;;
     next|rotate|cycle)
         rotate_theme
