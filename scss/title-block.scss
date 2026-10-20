@@ -1,42 +1,20 @@
 .title-block-window {
   background-color: $paper;
-  border: none;
+  border: $tb-border-outer solid $ink;
   padding: 0;
   margin: 0;
-  min-width: $tb-width;
-  min-height: $tb-height;
 }
 
+.tb-col,
 .tb-row {
-  min-width: $tb-width;
   padding: 0;
   margin: 0;
-}
-
-.tb-row-0 {
-  border-top: $tb-hairline solid rgba($ink, 0.65);
-  border-bottom: $tb-hairline solid rgba($ink, 0.65);
-  min-height: $tb-row0-height;
-}
-
-.tb-row-1 {
-  border-bottom: $tb-hairline solid rgba($ink, 0.65);
-  min-height: $tb-row-height;
-}
-
-.tb-row-2 {
-  border-bottom: $tb-hairline solid rgba($ink, 0.65);
-  min-height: $tb-row-height;
-}
-
-.tb-row-3 {
-  border-bottom: $tb-hairline solid rgba($ink, 0.65);
-  min-height: $tb-row-height;
 }
 
 .tb-cell {
   background-color: $paper;
-  padding: $tb-cell-pad-v $tb-cell-pad-h;
+  padding: $tbx-pad-v $tbx-pad-h;
+  margin: 0;
   transition: background-color $transition-fast;
 }
 
@@ -45,111 +23,60 @@ eventbox:hover .tb-cell {
   background-color: $tb-hover-bg;
 }
 
-.tb-time {
-  min-width: $tb-time-width;
-  min-height: $tb-row0-height;
-  border-left: $tb-hairline solid rgba($ink, 0.65);
-  border-right: $tb-hairline solid rgba($ink, 0.65);
+@mixin tbx-cell($w, $h, $right: true, $bottom: true) {
+  min-width: $w - (2 * $tbx-pad-h) - if($right, $tb-hairline, 0px);
+  min-height: $h - (2 * $tbx-pad-v) - if($bottom, $tb-hairline, 0px);
+  @if $right {
+    border-right: $tb-hairline solid $tbx-line;
+  }
+  @if $bottom {
+    border-bottom: $tb-hairline solid $tbx-line;
+  }
 }
 
-.tb-date {
-  min-width: $tb-date-width;
-  min-height: $tb-row0-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
+.tb-time    { @include tbx-cell($tbx-left-w,    $tbx-row-h * 2,    true,  true);  }
+.tb-network { @include tbx-cell($tbx-left-w,    $tbx-row-last-h,   true,  false); }
 
-.tb-sheet {
-  min-width: $tb-sheet-width;
-  min-height: $tb-row0-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
+.tb-date    { @include tbx-cell($tbx-date-w,    $tbx-row-h,        true,  true);  }
+.tb-sheet   { @include tbx-cell($tbx-sheet-w,   $tbx-row-h,        true,  true);  }
+.tb-project { @include tbx-cell($tbx-project-w, $tbx-row-h,        false, true);  }
 
-.tb-project {
-  min-width: $tb-project-width;
-  min-height: $tb-row0-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
+.tb-power   { @include tbx-cell($tbx-power-w,   $tbx-row-h,        true,  true);  }
+.tb-battery { @include tbx-cell($tbx-battery-w, $tbx-row-h,        true,  true);  }
+.tb-profile { @include tbx-cell($tbx-profile-w, $tbx-row-h,        true,  true);  }
+.tb-cpumem  { @include tbx-cell($tbx-cpumem-w,  $tbx-row-h,        false, true);  }
 
-.tb-power {
-  min-width: $tb-power-width;
-  min-height: $tb-row-height;
-  border-left: $tb-hairline solid rgba($ink, 0.65);
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-battery {
-  min-width: $tb-battery-width;
-  min-height: $tb-row-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-profile {
-  min-width: $tb-profile-width;
-  min-height: $tb-row-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-cpumem {
-  min-width: $tb-cpumem-width;
-  min-height: $tb-row-height;
-  border-left: $tb-hairline solid rgba($ink, 0.65);
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-network {
-  min-width: $tb-network-width;
-  min-height: $tb-row-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-temp {
-  min-width: $tb-temp-width;
-  min-height: $tb-row-height;
-  border-left: $tb-hairline solid rgba($ink, 0.65);
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-processes {
-  min-width: $tb-processes-width;
-  min-height: $tb-row-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-drawn {
-  min-width: $tb-drawn-width;
-  min-height: $tb-row-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
+.tb-temp    { @include tbx-cell($tbx-temp-w,    $tbx-row-last-h,   true,  false); }
+.tb-drawn   { @include tbx-cell($tbx-drawn-w,   $tbx-row-last-h,   false, false); }
 
 .tb-label {
-  font-size: $tb-label-size;
-  color: $ink_muted;
-}
-
-.tb-label-sm {
-  font-size: $tb-label-sm-size;
+  font-size: $tbx-label-size;
+  letter-spacing: $tbx-letter-spacing;
   color: $ink_muted;
 }
 
 .tb-value {
-  font-size: $tb-value-size;
+  font-size: $tbx-value-size;
   color: $ink;
 }
 
 .tb-value-sm {
-  font-size: $tb-value-sm-size;
-  color: $ink;
-}
-
-.tb-time-val {
-  font-size: $tb-time-size;
-  font-weight: bold;
-  color: $ink;
+  font-size: $tbx-value-sm-size;
 }
 
 .tb-temp-val {
-  font-size: $tb-temp-size;
+  font-size: $tbx-temp-size;
+}
+
+.tb-time-val {
+  font-size: $tbx-time-size;
+  font-weight: normal;
+}
+
+.tb-icon {
+  font-size: $tbx-icon-size;
   color: $ink;
+  margin-right: 8px;
 }
 
 .tb-cell.alert,

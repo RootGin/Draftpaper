@@ -56,3 +56,40 @@ $tb-time-size: 24px;
 $tb-temp-size: 11px;
 
 $transition-fast: 150ms ease;
+
+$tbx-zones: 3;
+
+$tbx-width: round(($frame-width / $zone-cols) * $tbx-zones);
+$tbx-height: round($frame-height / $zone-rows) + 1px;
+$tbx-in-w: $tbx-width - (2 * $tb-border-outer);
+$tbx-in-h: $tbx-height - (2 * $tb-border-outer);
+
+$tbx-pad-h: 14px;
+$tbx-pad-v: 8px;
+$tbx-line: rgba($ink, 0.45);
+
+$tbx-row-h: round($tbx-in-h * 0.3333);
+$tbx-row-last-h: $tbx-in-h - (2 * $tbx-row-h);
+
+$tbx-left-w: round($tbx-in-w * 0.261);
+$tbx-right-w: $tbx-in-w - $tbx-left-w;
+
+$tbx-date-w: round($tbx-right-w * 0.334);
+$tbx-sheet-w: round($tbx-right-w * 0.228);
+$tbx-project-w: $tbx-right-w - $tbx-date-w - $tbx-sheet-w;
+
+$tbx-power-w: round($tbx-right-w * 0.25);
+$tbx-battery-w: round($tbx-right-w * 0.23);
+$tbx-profile-w: round($tbx-right-w * 0.23);
+$tbx-cpumem-w: $tbx-right-w - $tbx-power-w - $tbx-battery-w - $tbx-profile-w;
+
+$tbx-temp-w: round($tbx-right-w * 0.542);
+$tbx-drawn-w: $tbx-right-w - $tbx-temp-w;
+
+$tbx-label-size: 12px;
+$tbx-value-size: 21px;
+$tbx-value-sm-size: 18px;
+$tbx-temp-size: 19px;
+$tbx-time-size: 56px;
+$tbx-icon-size: 18px;
+$tbx-letter-spacing: 2px;
