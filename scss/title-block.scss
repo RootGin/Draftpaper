@@ -5,19 +5,8 @@
   min-height: $tb-height;
 }
 
-.title-col-left {
-  min-width: $tb-col-left-width;
-  min-height: $tb-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.title-col-right {
-  min-width: $tb-col-right-width;
-  min-height: $tb-height;
-}
-
 .tb-row {
-  min-width: $tb-col-right-width;
+  min-width: $tb-width;
   min-height: $tb-row-height;
 }
 
@@ -30,7 +19,7 @@
 }
 
 .tb-row-2 {
-  min-height: $tb-network-height;
+  border-bottom: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-cell {
@@ -49,14 +38,9 @@ eventbox:hover .tb-cell {
 }
 
 .tb-time {
-  min-width: $tb-col-left-width;
-  min-height: $tb-time-height;
-  border-bottom: $tb-hairline solid rgba($ink, 0.65);
-}
-
-.tb-network {
-  min-width: $tb-col-left-width;
-  min-height: $tb-network-height;
+  min-width: $tb-time-width;
+  min-height: $tb-row-height;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-date {
@@ -91,29 +75,34 @@ eventbox:hover .tb-cell {
 .tb-profile {
   min-width: $tb-profile-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-cpumem {
   min-width: $tb-cpumem-width;
   min-height: $tb-row-height;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
+}
+
+.tb-network {
+  min-width: $tb-network-width;
+  min-height: $tb-row-height;
 }
 
 .tb-temp {
   min-width: $tb-temp-width;
-  min-height: $tb-network-height;
+  min-height: $tb-row-height;
   border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-processes {
   min-width: $tb-processes-width;
-  min-height: $tb-network-height;
+  min-height: $tb-row-height;
   border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-drawn {
   min-width: $tb-drawn-width;
-  min-height: $tb-network-height;
+  min-height: $tb-row-height;
 }
 
 .tb-label {

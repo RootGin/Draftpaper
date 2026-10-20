@@ -1,37 +1,44 @@
+$screen-width: 1920px;
+$screen-height: 1080px;
+$canvas-margin: 28px;
+
+$frame-width: $screen-width - (2 * $canvas-margin);
+$frame-height: $screen-height - (2 * $canvas-margin);
+
+$zone-cols: 6;
+$zone-rows: 4;
+
 $tb-hairline: 1px;
 $tb-border-outer: 1px;
 $tb-hover-bg: rgba($ink, 0.08);
 
-$tb-width: 932px;
-$tb-height: 310px;
+$tb-width: round(($frame-width / $zone-cols) * 2);
+$tb-height: round($frame-height / $zone-rows);
+$tb-row-height: round($tb-height / 4);
 
-$tb-col-left-width: 244px;
-$tb-col-right-width: 688px;
+$tb-time-width: 110px;
+$tb-date-width: 220px;
+$tb-sheet-width: 90px;
+$tb-project-width: $tb-width - $tb-time-width - $tb-date-width - $tb-sheet-width;
 
-$tb-row-height: 87px;
-$tb-time-height: 190px;
-$tb-network-height: 88px;
+$tb-power-width: 190px;
+$tb-battery-width: 210px;
+$tb-profile-width: $tb-width - $tb-power-width - $tb-battery-width;
 
-$tb-date-width: 205px;
-$tb-sheet-width: 134px;
-$tb-project-width: 277px;
+$tb-cpumem-width: 260px;
+$tb-network-width: $tb-width - $tb-cpumem-width;
 
-$tb-power-width: 148px;
-$tb-battery-width: 134px;
-$tb-profile-width: 134px;
-$tb-cpumem-width: 176px;
+$tb-temp-width: 311px;
+$tb-processes-width: 130px;
+$tb-drawn-width: $tb-width - $tb-temp-width - $tb-processes-width;
 
-$tb-temp-width: 349px;
-$tb-processes-width: 99px;
-$tb-drawn-width: 176px;
+$tb-label-size: 10px;
+$tb-label-sm-size: 9px;
+$tb-value-size: 16px;
+$tb-value-sm-size: 13px;
+$tb-time-size: 26px;
 
-$tb-label-size: 11px;
-$tb-label-sm-size: 10px;
-$tb-value-size: 18px;
-$tb-value-sm-size: 15px;
-$tb-time-size: 52px;
-
-$tb-cell-pad-v: 8px;
-$tb-cell-pad-h: 12px;
-$tb-cell-pad-h-sm: 8px;
+$tb-cell-pad-v: 4px;
+$tb-cell-pad-h: 8px;
+$tb-cell-pad-h-sm: 6px;
 $transition-fast: 150ms ease;
