@@ -176,8 +176,25 @@ def cmd_daemon(args, config_dir):
         windows = args.extra if args.extra else ["background", "title-block", "top-margin", "side-margins-left", "side-margins-right", "bottom-margin"]
         res = run_eww(config_dir, ["close"] + windows, capture=False)
         return res.returncode
+    elif action == "toggle":
+        target = args.extra[0] if (hasattr(args, "extra") and args.extra) else "title-block"
+        res = run_eww(config_dir, ["open", "--toggle", target], capture=False)
+        return res.returncode
     else:
         res = run_eww(config_dir, [action] + (args.extra or []), capture=False)
+        return res.returncode
+
+
+def cmd_title_block(args, config_dir):
+    action = getattr(args, "action", "toggle") or "toggle"
+    if action == "open":
+        res = run_eww(config_dir, ["open", "title-block"], capture=False)
+        return res.returncode
+    elif action == "close":
+        res = run_eww(config_dir, ["close", "title-block"], capture=False)
+        return res.returncode
+    else:
+        res = run_eww(config_dir, ["open", "--toggle", "title-block"], capture=False)
         return res.returncode
 
 
@@ -241,6 +258,9 @@ def build_parser():
     sub_drawn = subparsers.add_parser("drawn-click", help="Handle title-block DRAWN cell clicks")
     sub_drawn.add_argument("--right", action="store_true", help="Right click")
 
+    sub_tb = subparsers.add_parser("title-block", help="Toggle or control title block window")
+    sub_tb.add_argument("action", nargs="?", default="toggle", help="Action: toggle, open, close")
+
     return parser
 
 
@@ -264,6 +284,7 @@ def main():
         "screenshot": cmd_screenshot,
         "daemon": cmd_daemon,
         "drawn-click": cmd_drawn_click,
+        "title-block": cmd_title_block,
     }
 
     handler = dispatch.get(args.subcommand)

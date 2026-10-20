@@ -29,7 +29,7 @@ $canvas-margin: 28px;
 }
 
 .zone-tick-h {
-  border-right: 1px solid rgba($ink, 0.45);
+  border-right: 1px solid rgba($ink, 0.65);
 
   &:last-child {
     border-right: none;
@@ -37,7 +37,7 @@ $canvas-margin: 28px;
 }
 
 .zone-tick-v {
-  border-bottom: 1px solid rgba($ink, 0.45);
+  border-bottom: 1px solid rgba($ink, 0.65);
 
   &:last-child {
     border-bottom: none;

@@ -1,6 +1,6 @@
 .bottom-margin-band {
   background-color: $paper;
-  border-top: 1px solid rgba($ink, 0.45);
+  border-top: 1px solid rgba($ink, 0.65);
   min-height: 28px;
 
   .side-corner {
@@ -8,7 +8,7 @@
     background-color: $paper;
 
     &.left {
-      border-right: 1px solid rgba($ink, 0.45);
+      border-right: 1px solid rgba($ink, 0.65);
 
       label {
         min-width: 27px;
@@ -16,7 +16,7 @@
     }
 
     &.right {
-      border-left: 1px solid rgba($ink, 0.45);
+      border-left: 1px solid rgba($ink, 0.65);
 
       label {
         min-width: 27px;
@@ -30,7 +30,7 @@
 }
 
 .margin-zone {
-  border-right: 1px solid rgba($ink, 0.45);
+  border-right: 1px solid rgba($ink, 0.65);
   min-height: 28px;
 
   &.zone-6,

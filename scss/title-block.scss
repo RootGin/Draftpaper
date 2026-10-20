@@ -1,6 +1,6 @@
 .title-block-window {
   background-color: $paper;
-  border: $tb-border-outer solid $ink;
+  border: $tb-border-outer solid rgba($ink, 0.65);
   min-width: $tb-width;
   min-height: $tb-height;
 }
@@ -8,7 +8,7 @@
 .title-col-left {
   min-width: $tb-col-left-width;
   min-height: $tb-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .title-col-right {
@@ -22,11 +22,11 @@
 }
 
 .tb-row-0 {
-  border-bottom: $tb-hairline solid $ink_muted;
+  border-bottom: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-row-1 {
-  border-bottom: $tb-hairline solid $ink_muted;
+  border-bottom: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-row-2 {
@@ -50,7 +50,7 @@ eventbox:hover .tb-cell {
 .tb-time {
   min-width: $tb-col-left-width;
   min-height: $tb-time-height;
-  border-bottom: $tb-hairline solid $ink_muted;
+  border-bottom: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-network {
@@ -61,13 +61,13 @@ eventbox:hover .tb-cell {
 .tb-date {
   min-width: $tb-date-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-sheet {
   min-width: $tb-sheet-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-project {
@@ -78,19 +78,19 @@ eventbox:hover .tb-cell {
 .tb-power {
   min-width: $tb-power-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-battery {
   min-width: $tb-battery-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-profile {
   min-width: $tb-profile-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-cpumem {
@@ -101,13 +101,13 @@ eventbox:hover .tb-cell {
 .tb-temp {
   min-width: $tb-temp-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-processes {
   min-width: $tb-processes-width;
   min-height: $tb-row-height;
-  border-right: $tb-hairline solid $ink_muted;
+  border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-drawn {
