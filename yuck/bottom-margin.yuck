@@ -1,63 +1,71 @@
 (defwidget bottom-margin-widget []
   (box :class "bottom-margin-band"
        :orientation "h"
-       :space-evenly true
-    (box :class "margin-zone zone-1"
-      (eventbox :onclick "blueman-manager &"
-                :cursor "pointer"
-                :class "peripheral-cell"
+       :space-evenly false
+    (box :class "side-corner left"
+      (label :text ""))
+    (box :class "margin-zones"
+         :orientation "h"
+         :space-evenly true
+         :hexpand true
+      (box :class "margin-zone zone-1"
+        (eventbox :onclick "blueman-manager &"
+                  :cursor "pointer"
+                  :class "peripheral-cell"
+          (box :class "zone-content"
+               :halign "center"
+               :valign "center"
+               :orientation "h"
+               :space-evenly false
+               :spacing 6
+            (label :class "peripheral-icon"
+                   :text "${bluetooth.icon}")
+            (label :class "peripheral-text"
+                   :visible {bluetooth.connected}
+                   :text "${bluetooth.text}"))))
+      (box :class "margin-zone zone-2"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "2")))
+      (box :class "margin-zone zone-3"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "3")))
+      (box :class "margin-zone zone-4"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "4")))
+      (box :class "margin-zone zone-5"
+        (box :class "zone-content"
+             :halign "center"
+             :valign "center"
+          (label :class "zone-digit"
+                 :text "5")))
+      (box :class "margin-zone zone-6"
         (box :class "zone-content"
              :halign "center"
              :valign "center"
              :orientation "h"
              :space-evenly false
-             :spacing 6
-          (label :class "peripheral-icon"
-                 :text "${bluetooth.icon}")
-          (label :class "peripheral-text"
-                 :visible {bluetooth.connected}
-                 :text "${bluetooth.text}"))))
-    (box :class "margin-zone zone-2"
-      (box :class "zone-content"
-           :halign "center"
-           :valign "center"
-        (label :class "zone-digit"
-               :text "2")))
-    (box :class "margin-zone zone-3"
-      (box :class "zone-content"
-           :halign "center"
-           :valign "center"
-        (label :class "zone-digit"
-               :text "3")))
-    (box :class "margin-zone zone-4"
-      (box :class "zone-content"
-           :halign "center"
-           :valign "center"
-        (label :class "zone-digit"
-               :text "4")))
-    (box :class "margin-zone zone-5"
-      (box :class "zone-content"
-           :halign "center"
-           :valign "center"
-        (label :class "zone-digit"
-               :text "5")))
-    (box :class "margin-zone zone-6"
-      (box :class "zone-content"
-           :halign "center"
-           :valign "center"
-           :orientation "h"
-           :space-evenly false
-           :spacing 10
-        (eventbox :onclick "scripts/screenshot.sh &"
-                  :cursor "pointer"
-                  :class "screenshot-button"
-          (label :class "screenshot-icon"
-                 :text "󰹑"))
-        (eventbox :onclick "bash scripts/theme.sh next"
-                  :cursor "pointer"
-                  :class "theme-cell"
-          (label :class "theme-name"
-                 :text "${active_theme_label}"))))))
+             :spacing 10
+          (eventbox :onclick "scripts/screenshot.sh &"
+                    :cursor "pointer"
+                    :class "screenshot-button"
+            (label :class "screenshot-icon"
+                   :text "󰹑"))
+          (eventbox :onclick "bash scripts/theme.sh next"
+                    :cursor "pointer"
+                    :class "theme-cell"
+            (label :class "theme-name"
+                   :text "${active_theme_label}")))))
+    (box :class "side-corner right"
+      (label :text ""))))
 
 (defwindow bottom-margin
   :monitor 0
