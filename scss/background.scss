@@ -46,6 +46,8 @@ $canvas-margin: 28px;
 
 .canvas-interior {
   background-color: transparent;
+  background-image: radial-gradient(circle, rgba($ink, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 .wallpaper-layer {

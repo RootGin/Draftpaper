@@ -8,12 +8,12 @@ THEMES=("nord" "softglow" "blueprint" "daypanel" "nightpanel")
 
 get_current_theme() {
     if [ ! -f "$THEME_FILE" ]; then
-        echo "nord"
+        echo "softglow"
         return
     fi
     local theme
     theme=$(grep -oE 'themes/[a-zA-Z0-9_-]+' "$THEME_FILE" 2>/dev/null | cut -d/ -f2 || true)
-    echo "${theme:-nord}"
+    echo "${theme:-softglow}"
 }
 
 set_theme() {

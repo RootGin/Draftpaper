@@ -85,10 +85,10 @@ class Test01Scaffold(unittest.TestCase):
         self.assertTrue(theme_scss.is_file(), "theme.scss does not exist")
 
         content = theme_scss.read_text(encoding="utf-8").strip()
-        pattern = r'@import\s+["\'](?:\./)?themes/nord(?:\.scss)?["\']\s*;'
+        pattern = r'@import\s+["\'](?:\./)?themes/(?:softglow|nord)(?:\.scss)?["\']\s*;'
         self.assertTrue(
             re.search(pattern, content),
-            f"theme.scss does not import themes/nord. Content: {content!r}",
+            f"theme.scss does not import themes/softglow or themes/nord. Content: {content!r}",
         )
 
     def test_scss_compiles_cleanly(self):

@@ -36,8 +36,8 @@
 (defwindow top-margin
   :monitor 0
   :geometry (geometry :x "0%" :y "0%" :width "100%" :height "28px" :anchor "top center")
-  :stacking "bottom"
-  :exclusive false
+  :stacking "fg"
+  :exclusive true
   :focusable false
   :namespace "draftpaper-margin"
   (top-margin-widget))

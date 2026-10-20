@@ -34,8 +34,8 @@
 (defwindow side-margins-left
   :monitor 0
   :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "left center")
-  :stacking "bottom"
-  :exclusive false
+  :stacking "fg"
+  :exclusive true
   :focusable false
   :namespace "draftpaper-margin"
   (side-margins-left-widget))
@@ -43,8 +43,8 @@
 (defwindow side-margins-right
   :monitor 0
   :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "right center")
-  :stacking "bottom"
-  :exclusive false
+  :stacking "fg"
+  :exclusive true
   :focusable false
   :namespace "draftpaper-margin"
   (side-margins-right-widget))

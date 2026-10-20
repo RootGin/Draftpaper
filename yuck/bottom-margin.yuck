@@ -67,8 +67,8 @@
 (defwindow bottom-margin
   :monitor 0
   :geometry (geometry :x "0%" :y "0%" :width "100%" :height "28px" :anchor "bottom center")
-  :stacking "bottom"
-  :exclusive false
+  :stacking "fg"
+  :exclusive true
   :focusable false
   :namespace "draftpaper-margin"
   (bottom-margin-widget))
