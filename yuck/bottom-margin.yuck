@@ -27,9 +27,11 @@
            :orientation "h"
            :space-evenly false
            :spacing 6
-        (box :class "scale-bar-rule")
+        (box :class "scale-bar-rule"
+             :visible {scale_bar.measured}
+             :style "min-width: ${scale_bar.width}px;")
         (label :class "scale-bar-label"
-               :text "${scale_text}"))
+               :text "${scale_bar.text}"))
       (box :class "keyplan-container"
            :orientation "h"
            :space-evenly false
@@ -42,7 +44,7 @@
          :halign "end"
          :orientation "h"
          :space-evenly false
-         :spacing 8
+         :spacing 12
       (eventbox :onclick "scripts/screenshot.sh &"
                 :cursor "pointer"
                 :class "screenshot-button"
@@ -58,7 +60,7 @@
                 :class "theme-cell"
         (box :orientation "h"
              :space-evenly false
-             :spacing 4
+             :spacing 6
           (label :class "theme-label"
                  :text "THEME:")
           (label :class "theme-name"
@@ -68,7 +70,7 @@
   :monitor 0
   :geometry (geometry :x "0%" :y "0%" :width "100%" :height "28px" :anchor "bottom center")
   :stacking "fg"
-  :exclusive true
+  :exclusive false
   :focusable false
   :namespace "draftpaper-margin"
   (bottom-margin-widget))

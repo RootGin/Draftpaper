@@ -90,10 +90,10 @@
 
 (defwindow title-block
   :monitor 0
-  :geometry (geometry :x "0px"
-                      :y "0px"
+  :geometry (geometry :x "28px"
+                      :y "28px"
                       :anchor "bottom right")
-  :stacking "bottom"
+  :stacking "fg"
   :exclusive false
   :focusable false
   (title_block))

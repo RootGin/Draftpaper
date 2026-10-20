@@ -55,12 +55,16 @@ def main():
         true_scale, text, px_per_mm = get_display_scale()
 
     if "--json" in sys.argv:
+        width_px = int(round(100.0 * px_per_mm)) if (true_scale and px_per_mm) else 0
         payload = {
             "scale": text,
             "text": text,
+            "measured": true_scale,
             "true_scale": true_scale,
             "nts": not true_scale,
             "px_per_mm": px_per_mm,
+            "width": width_px,
+            "width_px": width_px,
         }
         print(json.dumps(payload), flush=True)
     else:

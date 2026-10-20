@@ -8,6 +8,7 @@
 (defvar osd_data "{\"type\": \"none\", \"value\": 0, \"text\": \"\", \"icon\": \"\", \"visible\": false}")
 (defpoll bluetooth :interval "5s" :initial "{\"connected\": false, \"powered\": false, \"icon\": \"󰂯\", \"text\": \"NO DEVICES\", \"devices\": []}" "bash scripts/peripherals.sh")
 (defpoll scale_text :interval "60s" :initial "100mm true scale" "python3 scripts/scale_bar.py")
+(defpoll scale_bar :interval "60s" :initial "{\"text\": \"100mm true scale\", \"width\": 565, \"measured\": true, \"nts\": false}" "python3 scripts/scale_bar.py --json")
 (defpoll active_theme :interval "3s" :initial "softglow" "bash scripts/theme.sh current")
 (defpoll keyplan :interval "10s" :initial "{\"count\": 1, \"monitors\": [{\"name\": \"primary\", \"active\": true, \"label\": \"1\"}]}" "python3 scripts/keyplan.py")
 (defpoll schedule_data :interval "3s" "python3 scripts/schedules.py data")

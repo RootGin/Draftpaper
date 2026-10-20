@@ -46,7 +46,6 @@
   border-right: 1px solid rgba($ink, 0.2);
 
   .scale-bar-rule {
-    min-width: 40px;
     min-height: 2px;
     background-color: $ink_muted;
     margin: 6px 0;
@@ -87,10 +86,11 @@
 }
 
 .bottom-margin-right {
-  padding: 2px 8px;
+  padding: 2px 28px 2px 8px;
 }
 
 .screenshot-button {
+  min-width: 64px;
   padding: 2px 8px;
   border: 1px solid rgba($ink, 0.2);
   transition: background-color $transition-base;
@@ -111,13 +111,14 @@
 }
 
 .theme-cell {
+  min-width: 110px;
   padding: 2px 8px;
   border: 1px solid rgba($ink, 0.2);
   transition: background-color $transition-base;
 
   .theme-label {
     font-size: $font-size-sm;
-    color: $ink_muted;
+    color: $ink;
   }
 
   .theme-name {
