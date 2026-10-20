@@ -2,36 +2,36 @@ $tb-hairline: 1px;
 $tb-border-outer: 1px;
 $tb-hover-bg: rgba($ink, 0.08);
 
-$tb-width: 520px;
-$tb-height: 144px;
+$tb-width: 932px;
+$tb-height: 310px;
 
-$tb-col-left-width: 136px;
-$tb-col-right-width: 384px;
+$tb-col-left-width: 244px;
+$tb-col-right-width: 688px;
 
-$tb-row-height: 48px;
-$tb-time-height: 96px;
-$tb-network-height: 48px;
+$tb-row-height: 87px;
+$tb-time-height: 190px;
+$tb-network-height: 88px;
 
-$tb-date-width: 128px;
-$tb-sheet-width: 88px;
-$tb-project-width: 168px;
+$tb-date-width: 205px;
+$tb-sheet-width: 134px;
+$tb-project-width: 277px;
 
-$tb-power-width: 96px;
-$tb-battery-width: 88px;
-$tb-profile-width: 88px;
-$tb-cpumem-width: 112px;
+$tb-power-width: 148px;
+$tb-battery-width: 134px;
+$tb-profile-width: 134px;
+$tb-cpumem-width: 176px;
 
-$tb-temp-width: 208px;
-$tb-processes-width: 64px;
-$tb-drawn-width: 112px;
+$tb-temp-width: 349px;
+$tb-processes-width: 99px;
+$tb-drawn-width: 176px;
 
-$tb-label-size: 10px;
-$tb-label-sm-size: 9px;
-$tb-value-size: 13px;
-$tb-value-sm-size: 11px;
-$tb-time-size: 32px;
+$tb-label-size: 11px;
+$tb-label-sm-size: 10px;
+$tb-value-size: 18px;
+$tb-value-sm-size: 15px;
+$tb-time-size: 52px;
 
-$tb-cell-pad-v: 4px;
-$tb-cell-pad-h: 6px;
-$tb-cell-pad-h-sm: 4px;
+$tb-cell-pad-v: 8px;
+$tb-cell-pad-h: 12px;
+$tb-cell-pad-h-sm: 8px;
 $transition-fast: 150ms ease;

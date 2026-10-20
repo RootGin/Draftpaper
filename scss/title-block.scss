@@ -30,6 +30,7 @@
 }
 
 .tb-row-2 {
+  min-height: $tb-network-height;
 }
 
 .tb-cell {
@@ -100,19 +101,19 @@ eventbox:hover .tb-cell {
 
 .tb-temp {
   min-width: $tb-temp-width;
-  min-height: $tb-row-height;
+  min-height: $tb-network-height;
   border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-processes {
   min-width: $tb-processes-width;
-  min-height: $tb-row-height;
+  min-height: $tb-network-height;
   border-right: $tb-hairline solid rgba($ink, 0.65);
 }
 
 .tb-drawn {
   min-width: $tb-drawn-width;
-  min-height: $tb-row-height;
+  min-height: $tb-network-height;
 }
 
 .tb-label {
