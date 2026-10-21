@@ -52,9 +52,14 @@
     color: $ink;
   }
 
+  .workspace-apps {
+    padding-left: 2px;
+  }
+
   .workspace-glyph {
-    font-size: $font-size-sm;
+    font-size: $font-size;
     color: $ink_muted;
+    padding-right: 4px;
   }
 
   &.focused {

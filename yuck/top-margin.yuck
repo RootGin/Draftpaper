@@ -28,7 +28,7 @@
                   (box :class "workspace-apps"
                        :orientation "h"
                        :space-evenly false
-                       :spacing 2
+                       :spacing 6
                     (for app in {ws.apps}
                       (label :class "workspace-glyph"
                              :text "${app}")))))))))

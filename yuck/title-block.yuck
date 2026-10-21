@@ -132,8 +132,8 @@
 
 (defwindow title-block
   :monitor 0
-  :geometry (geometry :x "0px"
-                      :y "0px"
+  :geometry (geometry :x "-1px"
+                      :y "-1px"
                       :anchor "bottom right")
   :stacking "fg"
   :exclusive false

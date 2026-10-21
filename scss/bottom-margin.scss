@@ -82,8 +82,10 @@
   padding: 2px 4px;
 
   .screenshot-icon {
-    font-size: $font-size;
+    font-size: $font-size + 2px;
     color: $ink;
+    padding: 2px 8px;
+    margin: 0;
   }
 
   &:hover {
@@ -95,6 +97,7 @@
 
 .theme-cell {
   padding: 2px 4px;
+  min-height: 20px;
 
   .theme-name {
     font-size: $font-size;

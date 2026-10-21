@@ -60,7 +60,7 @@ $transition-fast: 150ms ease;
 $tbx-zones: 3;
 
 $tbx-width: round(($frame-width / $zone-cols) * $tbx-zones);
-$tbx-height: round($frame-height / $zone-rows);
+$tbx-height: round($frame-height / $zone-rows) + 1px;
 
 $tbx-in-w: $tbx-width - (2 * $tb-border-outer);
 $tbx-in-h: $tbx-height - (2 * $tb-border-outer);
