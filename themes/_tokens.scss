@@ -60,7 +60,8 @@ $transition-fast: 150ms ease;
 $tbx-zones: 3;
 
 $tbx-width: round(($frame-width / $zone-cols) * $tbx-zones);
-$tbx-height: round($frame-height / $zone-rows) + 1px;
+$tbx-height: round($frame-height / $zone-rows);
+
 $tbx-in-w: $tbx-width - (2 * $tb-border-outer);
 $tbx-in-h: $tbx-height - (2 * $tb-border-outer);
 
@@ -83,7 +84,9 @@ $tbx-battery-w: round($tbx-right-w * 0.23);
 $tbx-profile-w: round($tbx-right-w * 0.23);
 $tbx-cpumem-w: $tbx-right-w - $tbx-power-w - $tbx-battery-w - $tbx-profile-w;
 
-$tbx-temp-w: round($tbx-right-w * 0.542);
+$tbx-block-left: $screen-width - $canvas-margin - $tbx-width + 1px;
+$tbx-tick-x: round($canvas-margin + (($frame-width / $zone-cols) * ($zone-cols - 1)));
+$tbx-temp-w: $tbx-tick-x - ($tbx-block-left + $tb-border-outer) - $tbx-left-w + $tb-hairline;
 $tbx-drawn-w: $tbx-right-w - $tbx-temp-w;
 
 $tbx-label-size: 12px;
