@@ -1,8 +1,32 @@
 .top-margin-band {
   background-color: $paper;
   border-bottom: 1px solid rgba($ink, 0.65);
-  padding: 0 28px;
   min-height: 28px;
+
+  .side-corner {
+    min-width: 28px;
+    background-color: $paper;
+
+    &.left {
+      border-right: 1px solid rgba($ink, 0.65);
+
+      label {
+        min-width: 27px;
+      }
+    }
+
+    &.right {
+      border-left: 1px solid rgba($ink, 0.65);
+
+      label {
+        min-width: 27px;
+      }
+    }
+  }
+
+  .margin-zones {
+    min-height: 28px;
+  }
 }
 
 .margin-zone {

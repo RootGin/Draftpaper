@@ -71,7 +71,7 @@
   :monitor 0
   :geometry (geometry :x "0%" :y "0%" :width "100%" :height "28px" :anchor "bottom center")
   :stacking "fg"
-  :exclusive false
+  :exclusive true
   :focusable false
   :namespace "draftpaper-margin"
   (bottom-margin-widget))

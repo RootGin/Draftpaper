@@ -20,47 +20,39 @@
 (defwidget side-margins-left-widget []
   (box :class "side-margin-band left"
        :orientation "v"
-       :space-evenly false
-    (box :class "side-corner top"
-      (label :text ""))
+       :space-evenly true
     (box :class "side-cells"
          :orientation "v"
          :space-evenly true
          :vexpand true
       (for slot in {parked_slots.left}
-        (side-cell :slot slot)))
-    (box :class "side-corner bottom"
-      (label :text ""))))
+        (side-cell :slot slot)))))
 
 (defwidget side-margins-right-widget []
   (box :class "side-margin-band right"
        :orientation "v"
-       :space-evenly false
-    (box :class "side-corner top"
-      (label :text ""))
+       :space-evenly true
     (box :class "side-cells"
          :orientation "v"
          :space-evenly true
          :vexpand true
       (for slot in {parked_slots.right}
-        (side-cell :slot slot)))
-    (box :class "side-corner bottom"
-      (label :text ""))))
+        (side-cell :slot slot)))))
 
 (defwindow side-margins-left
   :monitor 0
-  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "left center")
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "1024px" :anchor "left center")
   :stacking "fg"
-  :exclusive false
+  :exclusive true
   :focusable false
   :namespace "draftpaper-margin"
   (side-margins-left-widget))
 
 (defwindow side-margins-right
   :monitor 0
-  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "right center")
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "1024px" :anchor "right center")
   :stacking "fg"
-  :exclusive false
+  :exclusive true
   :focusable false
   :namespace "draftpaper-margin"
   (side-margins-right-widget))

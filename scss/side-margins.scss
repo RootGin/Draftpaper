@@ -27,27 +27,6 @@
   }
 }
 
-.side-corner {
-  min-height: 28px;
-  background-color: $paper;
-
-  &.top {
-    border-bottom: 1px solid rgba($ink, 0.65);
-
-    label {
-      min-height: 27px;
-    }
-  }
-
-  &.bottom {
-    border-top: 1px solid rgba($ink, 0.65);
-
-    label {
-      min-height: 27px;
-    }
-  }
-}
-
 .side-cells {
   min-width: 28px;
 }
@@ -55,7 +34,7 @@
 .side-cell {
   background-color: $paper;
   padding: 4px 2px;
-  border-bottom: 1px solid rgba($ink, 0.2);
+  border-bottom: 1px solid rgba($ink, 0.65);
   transition: background-color $transition-base;
 
   &:last-child {

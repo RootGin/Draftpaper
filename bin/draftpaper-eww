@@ -169,7 +169,7 @@ def cmd_daemon(args, config_dir):
         res = run_eww(config_dir, ["reload"], capture=False)
         return res.returncode
     elif action == "open":
-        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "side-margins-left", "side-margins-right", "bottom-margin"]
+        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "bottom-margin", "side-margins-left", "side-margins-right"]
         res = run_eww(config_dir, ["open-many"] + windows, capture=False)
         return res.returncode
     elif action == "close":
