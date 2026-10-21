@@ -15,5 +15,6 @@ if command -v end-rs >/dev/null 2>&1; then
     end-rs daemon &
   fi
 fi
-
-eww -c "$CONFIG_DIR" open-many background title-block top-margin side-margins-left side-margins-right bottom-margin
+eww -c "$CONFIG_DIR" open-many background top-margin bottom-margin
+sleep 0.1
+eww -c "$CONFIG_DIR" open-many side-margins-left side-margins-right

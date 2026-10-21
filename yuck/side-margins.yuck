@@ -41,7 +41,7 @@
 
 (defwindow side-margins-left
   :monitor 0
-  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "1024px" :anchor "left center")
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "center left")
   :stacking "fg"
   :exclusive true
   :focusable false
@@ -50,7 +50,7 @@
 
 (defwindow side-margins-right
   :monitor 0
-  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "1024px" :anchor "right center")
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "center right")
   :stacking "fg"
   :exclusive true
   :focusable false
