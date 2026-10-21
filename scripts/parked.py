@@ -44,16 +44,53 @@ def write_state(data):
 
 
 
+def get_niri_workspace():
+    try:
+        res = subprocess.run(["niri", "msg", "-j", "workspaces"], capture_output=True, text=True, timeout=1)
+        if res.returncode == 0:
+            for w in json.loads(res.stdout):
+                if w.get("is_focused"):
+                    return str(w.get("name") or w.get("idx") or 1)
+    except Exception:
+        pass
+    return "1"
+
+
+def get_first_free_cell():
+    state = read_state()
+    occupied = {p.get("cell") for p in state.get("parked", [])}
+    for c in range(ZONES_DOWN * 2):
+        if c not in occupied:
+            return c
+    return 0
+
+
+def perform_toggle():
+    comp = detect_compositor()
+    active_win = get_active_window(comp)
+    active_id = str(active_win.get("id"))
+    state = read_state()
+    parked_list = state.get("parked", [])
+    for p in parked_list:
+        if str(p.get("id")) == active_id:
+            perform_unpark(active_id)
+            return
+    cell = get_first_free_cell()
+    perform_park(cell)
+
+
 def perform_park(cell):
     comp = detect_compositor()
     active_win = get_active_window(comp)
     state = read_state()
     parked_list = [p for p in state.get("parked", []) if p.get("cell") != cell and p.get("id") != active_win.get("id")]
+    ws = get_niri_workspace() if comp == "niri" else ""
     parked_list.append({
         "cell": cell,
         "id": active_win.get("id"),
         "title": active_win.get("title"),
         "cls": active_win.get("cls"),
+        "ws": ws,
     })
     state["parked"] = parked_list
     write_state(state)
@@ -66,6 +103,11 @@ def perform_park(cell):
     elif comp == "sway":
         try:
             subprocess.run(["swaymsg", "move", "to", "scratchpad"], capture_output=True, timeout=1)
+        except Exception:
+            pass
+    elif comp == "niri":
+        try:
+            subprocess.run(["niri", "msg", "action", "move-window-to-workspace", "magic"], capture_output=True, timeout=1)
         except Exception:
             pass
 
@@ -96,6 +138,15 @@ def perform_unpark(cell_or_id):
         elif comp == "sway":
             try:
                 subprocess.run(["swaymsg", f"[con_id={found.get('id')}]", "focus"], capture_output=True, timeout=1)
+            except Exception:
+                pass
+        elif comp == "niri":
+            try:
+                subprocess.run(["niri", "msg", "action", "focus-window", "--id", str(found.get("id"))], capture_output=True, timeout=1)
+                ws = found.get("ws")
+                if ws and ws != "magic":
+                    subprocess.run(["niri", "msg", "action", "move-window-to-workspace", str(ws)], capture_output=True, timeout=1)
+                    subprocess.run(["niri", "msg", "action", "focus-workspace", str(ws)], capture_output=True, timeout=1)
             except Exception:
                 pass
 
@@ -175,9 +226,13 @@ def main():
         if cmd == "--oneshot":
             print_payload()
             return
-        elif cmd == "park" and len(sys.argv) > 2:
+        elif cmd == "toggle":
+            perform_toggle()
+            update_eww()
+            return
+        elif cmd == "park":
             try:
-                cell = int(sys.argv[2])
+                cell = int(sys.argv[2]) if len(sys.argv) > 2 else get_first_free_cell()
                 perform_park(cell)
                 update_eww()
             except Exception:
