@@ -34,6 +34,8 @@ set_theme() {
 
     if command -v eww >/dev/null 2>&1; then
         eww -c "$ROOT_DIR" reload >/dev/null 2>&1 || true
+        eww -c "$ROOT_DIR" close side-margins-left side-margins-right >/dev/null 2>&1 || true
+        eww -c "$ROOT_DIR" open-many side-margins-left side-margins-right >/dev/null 2>&1 || true
         eww -c "$ROOT_DIR" update active_theme="$target" >/dev/null 2>&1 || true
         local label
         case "$target" in

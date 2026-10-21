@@ -5,13 +5,13 @@
     (box :class "side-cell-inner"
          :orientation "v"
          :space-evenly false
+         :vexpand true
+         :valign "center"
       (label :class "side-letter"
              :text "${slot.letter}")
       (box :class "side-content"
-           :vexpand true
-           :valign "center"
+           :visible {slot.occupied}
         (label :class "side-title"
-               :visible {slot.occupied}
                :angle 90
                :limit-width 18
                :truncate true
@@ -41,7 +41,7 @@
 
 (defwindow side-margins-left
   :monitor 0
-  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "center left")
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "1023px" :anchor "left center")
   :stacking "fg"
   :exclusive true
   :focusable false
@@ -50,7 +50,7 @@
 
 (defwindow side-margins-right
   :monitor 0
-  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "100%" :anchor "center right")
+  :geometry (geometry :x "0%" :y "0%" :width "28px" :height "1023px" :anchor "right center")
   :stacking "fg"
   :exclusive true
   :focusable false
