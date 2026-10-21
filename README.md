@@ -48,6 +48,7 @@ bin/draftpaper-eww toggle launcher
 bin/draftpaper-eww graph cpu
 bin/draftpaper-eww schedule equipment
 bin/draftpaper-eww theme next
+bin/draftpaper-eww lock
 ```
 
 ---

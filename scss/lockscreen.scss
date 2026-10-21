@@ -1,0 +1,32 @@
+$lock-box-width: round($screen-width * 0.32);
+$lock-box-height: 75px;
+
+.lock-box {
+  min-width: $lock-box-width;
+  min-height: $lock-box-height;
+  padding: 0 28px;
+  background-color: $paper;
+  border: 3px solid $ink;
+
+  &.denied {
+    border-color: $alert;
+  }
+}
+
+.lock-icon {
+  margin-right: 22px;
+  font-family: "Symbols Nerd Font Mono", "JetBrainsMono Nerd Font", $font-family;
+  font-size: 26px;
+  color: $ink;
+}
+
+.lock-text {
+  font-size: 20px;
+  letter-spacing: 6px;
+  color: $ink;
+}
+
+.lock-box.denied .lock-icon,
+.lock-box.denied .lock-text {
+  color: $alert;
+}

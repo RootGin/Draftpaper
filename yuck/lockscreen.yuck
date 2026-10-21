@@ -1,0 +1,88 @@
+(defvar lock_mask "")
+(defvar lock_state "idle")
+
+(defwidget lock_sheet []
+  (box :class "drafting-sheet"
+       :orientation "vertical"
+       :space-evenly false
+    (box :class "margin-top-bar"
+         :orientation "horizontal"
+         :space-evenly false
+      (box :class "margin-corner")
+      (box :class "margin-ticks-h"
+           :orientation "horizontal"
+           :space-evenly true
+           :hexpand true
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h"))
+      (box :class "margin-corner"))
+    (box :class "center-sheet"
+         :orientation "horizontal"
+         :space-evenly false
+         :vexpand true
+      (box :class "margin-ticks-v"
+           :orientation "vertical"
+           :space-evenly true
+        (box :class "zone-tick-v")
+        (box :class "zone-tick-v")
+        (box :class "zone-tick-v")
+        (box :class "zone-tick-v"))
+      (box :class "inner-frame"
+           :vexpand true
+           :hexpand true
+        (box :class "canvas-interior"
+             :vexpand true
+             :hexpand true))
+      (box :class "margin-ticks-v"
+           :orientation "vertical"
+           :space-evenly true
+        (box :class "zone-tick-v")
+        (box :class "zone-tick-v")
+        (box :class "zone-tick-v")
+        (box :class "zone-tick-v")))
+    (box :class "margin-bottom-bar"
+         :orientation "horizontal"
+         :space-evenly false
+      (box :class "margin-corner")
+      (box :class "margin-ticks-h"
+           :orientation "horizontal"
+           :space-evenly true
+           :hexpand true
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h")
+        (box :class "zone-tick-h"))
+      (box :class "margin-corner"))))
+
+(defwidget lock_box []
+  (box :class "lock-box ${lock_state}"
+       :halign "center"
+       :valign "center"
+       :orientation "h"
+       :space-evenly false
+    (label :class "lock-icon" :text "󰈷")
+    (label :class "lock-text"
+           :halign "start"
+           :hexpand true
+           :text {lock_state == "denied" ? "DENIED" : lock_mask})))
+
+(defwindow lockscreen
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "100%"
+                      :anchor "top left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable "exclusive"
+  :namespace "draftpaper-lock"
+  (overlay
+    (lock_sheet)
+    (lock_box)))

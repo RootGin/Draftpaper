@@ -24,3 +24,4 @@
 (include "./yuck/schedules.yuck")
 (include "./yuck/launcher.yuck")
 (include "./yuck/load-graphs.yuck")
+(include "./yuck/lockscreen.yuck")

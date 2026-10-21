@@ -137,6 +137,13 @@ def cmd_screenshot(args, config_dir):
     return res.returncode
 
 
+def cmd_lock(args, config_dir):
+    script = config_dir / "scripts" / "lock.py"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    res = subprocess.run([sys.executable, str(script)] + (args.extra or []), env=env)
+    return res.returncode
+
+
 def cmd_daemon(args, config_dir):
     action = args.action or "status"
     if action == "start":
@@ -251,6 +258,9 @@ def build_parser():
     sub_shot = subparsers.add_parser("screenshot", help="Capture screenshot")
     sub_shot.add_argument("extra", nargs="*", help="Additional arguments")
 
+    sub_lock = subparsers.add_parser("lock", help="Lock the screen (blocks until unlocked)")
+    sub_lock.add_argument("extra", nargs="*", help="Additional arguments")
+
     sub_daemon = subparsers.add_parser("daemon", help="Manage eww daemon and windows")
     sub_daemon.add_argument("action", nargs="?", default="status", help="Action: start, stop, restart, ping, status, reload, open, close")
     sub_daemon.add_argument("extra", nargs="*", help="Additional arguments")
@@ -282,6 +292,7 @@ def main():
         "graph": cmd_graph,
         "park": cmd_park,
         "screenshot": cmd_screenshot,
+        "lock": cmd_lock,
         "daemon": cmd_daemon,
         "drawn-click": cmd_drawn_click,
         "title-block": cmd_title_block,
