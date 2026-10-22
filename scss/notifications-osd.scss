@@ -44,6 +44,110 @@
   border-left: 1px solid rgba($ink, 0.2);
 }
 
+.notification-appicon {
+  margin-right: 4px;
+}
+
+.end-notification-actions {
+  margin-left: 8px;
+}
+
+.end-notification-btn {
+  background-color: $paper;
+  color: $ink;
+  border: 1px solid rgba($ink, 0.3);
+  padding: 1px 6px;
+  font-size: $font-size-sm;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background-color: rgba($accent, 0.25);
+  }
+}
+
+.history-window {
+  background-color: rgba($paper, 0.96);
+  border: 1px solid rgba($ink, 0.3);
+  padding: 8px 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.history-entry {
+  border-bottom: 1px solid rgba($ink, 0.15);
+  padding: 6px 4px;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background-color: rgba($accent, 0.15);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.history-title-bar {
+  margin-bottom: 2px;
+}
+
+.history-appicon {
+  margin-right: 4px;
+}
+
+.history-appname {
+  font-size: $font-size-sm;
+  font-weight: bold;
+  color: $strong;
+}
+
+.history-body-box {
+  margin-top: 2px;
+}
+
+.history-summary {
+  font-size: $font-size;
+  color: $ink;
+  margin-right: 6px;
+}
+
+.history-body {
+  font-size: $font-size-sm;
+  color: $ink_muted;
+}
+
+.reply-box {
+  background-color: rgba($paper, 0.96);
+  border: 1px solid rgba($ink, 0.3);
+  padding: 10px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.reply-input {
+  background-color: $paper_light;
+  border: 1px solid rgba($ink, 0.25);
+  padding: 4px 8px;
+  color: $ink;
+  font-size: $font-size;
+}
+
+.reply-buttons {
+  margin-top: 6px;
+}
+
+.reply-btn-send,
+.reply-btn-cancel {
+  background-color: $paper;
+  color: $ink;
+  border: 1px solid rgba($ink, 0.3);
+  padding: 2px 10px;
+  font-size: $font-size-sm;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background-color: rgba($accent, 0.25);
+  }
+}
+
 .top-osd-bar {
   background-color: transparent;
   padding: 0 $padding;

@@ -176,11 +176,11 @@ def cmd_daemon(args, config_dir):
         res = run_eww(config_dir, ["reload"], capture=False)
         return res.returncode
     elif action == "open":
-        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "bottom-margin", "side-margins-left", "side-margins-right"]
+        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "bottom-margin", "side-margins-left", "side-margins-right", "top-notifications"]
         res = run_eww(config_dir, ["open-many"] + windows, capture=False)
         return res.returncode
     elif action == "close":
-        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "side-margins-left", "side-margins-right", "bottom-margin"]
+        windows = args.extra if args.extra else ["background", "title-block", "top-margin", "side-margins-left", "side-margins-right", "bottom-margin", "top-notifications"]
         res = run_eww(config_dir, ["close"] + windows, capture=False)
         return res.returncode
     elif action == "toggle":
@@ -211,6 +211,15 @@ def cmd_drawn_click(args, config_dir):
         res = subprocess.run(shlex.split(cmd))
         return res.returncode
     return 0
+
+
+def cmd_notification(args, config_dir):
+    script = config_dir / "scripts" / "notifications.py"
+    env = dict(os.environ, DRAFTPAPER_CONFIG_DIR=str(config_dir), EWW_DIR=str(config_dir))
+    action = getattr(args, "action", None) or "--oneshot"
+    cmd = [sys.executable, str(script), action] + (args.extra or [])
+    res = subprocess.run(cmd, env=env)
+    return res.returncode
 
 
 def build_parser():
@@ -252,7 +261,7 @@ def build_parser():
 
     sub_park = subparsers.add_parser("park", help="Parked windows management")
     sub_park.add_argument("--oneshot", action="store_true", dest="oneshot", default=False, help="Print parked windows JSON once")
-    sub_park.add_argument("action", nargs="?", default="list", help="Action: list, park, unpark, --oneshot")
+    sub_park.add_argument("action", nargs="?", default="list", help="Action: list, toggle, park [CELL], unpark ID|CELL, all, next, prev")
     sub_park.add_argument("extra", nargs="*", help="Additional arguments")
 
     sub_shot = subparsers.add_parser("screenshot", help="Capture screenshot")
@@ -270,6 +279,10 @@ def build_parser():
 
     sub_tb = subparsers.add_parser("title-block", help="Toggle or control title block window")
     sub_tb.add_argument("action", nargs="?", default="toggle", help="Action: toggle, open, close")
+
+    sub_notif = subparsers.add_parser("notification", help="Control or view desktop notifications")
+    sub_notif.add_argument("action", nargs="?", default="--oneshot", help="Action: post, dismiss, action, --oneshot")
+    sub_notif.add_argument("extra", nargs="*", help="Additional arguments")
 
     return parser
 
@@ -296,6 +309,7 @@ def main():
         "daemon": cmd_daemon,
         "drawn-click": cmd_drawn_click,
         "title-block": cmd_title_block,
+        "notification": cmd_notification,
     }
 
     handler = dispatch.get(args.subcommand)

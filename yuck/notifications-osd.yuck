@@ -1,3 +1,78 @@
+(defwidget end-notification [notification]
+  (eventbox :onclick "${end-binary} action ${notification.id} default"
+            :onrightclick "${end-binary} close ${notification.id}"
+            :cursor "pointer"
+            :class "notification-banner ${notification.urgency}"
+    (box :class "notification-content"
+         :orientation "h"
+         :space-evenly false
+         :spacing 8
+      (box :visible {notification.app_icon != ""}
+        (image :class "notification-appicon"
+               :path {notification.app_icon}
+               :image-width 16
+               :image-height 16))
+      (label :class "notification-text"
+             :limit-width 80
+             :text "${notification.application != '' ? '${notification.application}: ' : ''}${notification.summary}${notification.body != '' ? ' — ${notification.body}' : ''}")
+      (box :class "end-notification-actions"
+           :orientation "h"
+           :space-evenly false
+           :spacing 4
+        (for action in {notification.actions}
+          (button :class "end-notification-btn"
+                  :onclick "${end-binary} action ${notification.id} ${action.id}"
+            "${action.text}"))))))
+
+(defwidget end-history [history]
+  (eventbox :onclick "${end-binary} history close"
+            :cursor "pointer"
+            :class "history-entry"
+    (box :class "history-box"
+         :orientation "v"
+         :space-evenly false
+      (box :class "history-title-bar"
+           :orientation "h"
+           :space-evenly false
+           :spacing 6
+        (box :visible {history.app_icon != ""}
+          (image :class "history-appicon"
+                 :path {history.app_icon}
+                 :image-width 14
+                 :image-height 14))
+        (label :class "history-appname"
+               :halign "start"
+               :text "${history.app_name}"))
+      (box :class "history-body-box"
+           :orientation "h"
+           :space-evenly false
+           :spacing 6
+        (label :class "history-summary"
+               :halign "start"
+               :markup "${history.summary}")
+        (label :class "history-body"
+               :halign "start"
+               :markup "${history.body}")))))
+
+(defwidget end-reply [id]
+  (box :class "reply-box"
+       :orientation "v"
+       :space-evenly false
+       :spacing 6
+    (input :class "reply-input"
+           :value end-reply-text
+           :onchange "eww -c /home/rootgin/.config/eww/draftpaper-eww update end-reply-text='{}'")
+    (box :class "reply-buttons"
+         :orientation "h"
+         :space-evenly false
+         :spacing 8
+      (button :class "reply-btn-send"
+              :onclick "${end-binary} reply send ${id} '${end-reply-text}'"
+        "Reply")
+      (button :class "reply-btn-cancel"
+              :onclick "${end-binary} reply close ${id}"
+        "Cancel"))))
+
 (defwidget top-notifications-widget []
   (box :class "top-notifications-bar"
        :orientation "h"
@@ -52,6 +127,35 @@
   :namespace "draftpaper-notifications"
   (top-notifications-widget))
 
+(defwindow notification-frame
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "50%" :height "28px" :anchor "top center")
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "draftpaper-notifications"
+  (top-notifications-widget))
+
+(defwindow history-frame
+  :monitor 0
+  :geometry (geometry :x "10px" :y "35px" :width "420px" :height "200px" :anchor "top right")
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  :namespace "draftpaper-history"
+  (box :class "history-window"
+    (scroll :hscroll false :vscroll true
+      (literal :content {end-histories != "" ? end-histories : "(box)"}))))
+
+(defwindow reply-frame
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "400px" :height "100px" :anchor "center")
+  :stacking "fg"
+  :exclusive false
+  :focusable true
+  :namespace "draftpaper-reply"
+  (literal :content {end-replies != "" ? end-replies : "(box)"}))
+
 (defwindow top-osd
   :monitor 0
   :geometry (geometry :x "10px" :y "0%" :width "240px" :height "28px" :anchor "top right")
@@ -60,3 +164,4 @@
   :focusable false
   :namespace "draftpaper-osd"
   (top-osd-widget))
+
