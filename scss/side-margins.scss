@@ -53,6 +53,14 @@
   }
 
   &.occupied {
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba($ink, 0.35) 0px,
+      rgba($ink, 0.35) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+
     .side-letter {
       color: $ink;
       font-weight: bold;
@@ -60,6 +68,8 @@
 
     .side-title {
       color: $ink;
+      background-color: $paper;
+      padding: 4px 0;
     }
   }
 

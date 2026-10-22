@@ -1,5 +1,5 @@
 (defwidget side-cell [slot]
-  (eventbox :onclick "python3 scripts/parked.py ${slot.occupied ? 'unpark' : 'park'} ${slot.cell}"
+  (eventbox :onclick "python3 scripts/parked.py ${slot.occupied ? 'unpark' : 'park'} ${slot.occupied ? slot.window_id : slot.cell}"
             :cursor "pointer"
             :class "side-cell ${slot.occupied ? 'occupied' : 'empty'}"
     (box :class "side-cell-inner"
